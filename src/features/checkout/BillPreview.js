@@ -3,20 +3,12 @@ import React from 'react'
 import CryptoJS from 'crypto-js';
 import querystring from 'query-string';
 import PaymentMethod from './PaymentMethod'
+import moment from 'moment'
 import { fCurrencyVND } from '../../utils/formatNumber'
 import { VNPAY_RETURN_URL, VNPAY_SECRET_KEY, VNPAY_TMN_CODE, VNPAY_VPN_URL } from '../../configs/app'
+import { sortObject } from '../../utils/sortHelper';
 
 const BillPreview = () => {
-
-    const sortObject = (obj) => {
-        const sorted = {};
-        const keys = Object.keys(obj).sort();
-        keys.forEach(key => {
-            sorted[key] = obj[key];
-        });
-        return sorted;
-    };
-
     function formatCurrentDateTime() {
         const date = new Date();
 
@@ -31,20 +23,21 @@ const BillPreview = () => {
     }
 
     const handlePayment = () => {
+        let date = new Date();
+        const orderId = moment(date).format('DDHHmmss')
+
         const vnpParams = {
             vnp_Version: '2.1.0',
             vnp_Command: 'pay',
             vnp_TmnCode: VNPAY_TMN_CODE,
             vnp_Locale: 'vn',
             vnp_CurrCode: 'VND',
-            //   vnp_TxnRef: orderId,
-            vnp_TxnRef: 1,
-            vnp_OrderInfo: `Payment for order ${1}`,
+            vnp_TxnRef: orderId,
+            vnp_OrderInfo: `Payment for order ${orderId}`,
             vnp_OrderType: 'other',
-            //   vnp_Amount: amount * 100, // Amount in VND
-            vnp_Amount: 100 * 100, // Amount in VND
+            vnp_Amount: 1000000 * 1000, // Amount in VND
             vnp_ReturnUrl: VNPAY_RETURN_URL,
-            vnp_IpAddr: '127.0.0.1',
+            vnp_IpAddr: '::1',
             vnp_CreateDate: formatCurrentDateTime(),
         };
 
@@ -53,8 +46,8 @@ const BillPreview = () => {
         const hmac = CryptoJS.HmacSHA512(signData, VNPAY_SECRET_KEY);
         const signed = hmac.toString(CryptoJS.enc.Hex);
         sortedParams.vnp_SecureHash = signed;
+        const paymentUrl = `${VNPAY_VPN_URL}?${querystring.stringify(sortedParams, { encode: false })}`;
 
-        const paymentUrl = `${VNPAY_VPN_URL}?${querystring.stringify(sortedParams)}`;
         window.location.href = paymentUrl;
     };
 
