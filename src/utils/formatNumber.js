@@ -10,6 +10,17 @@ export function fCurrency(number, format = '') {
   return numeral(number).format(defaultFormat);
 }
 
+export function fCurrencyVND(amount) {
+  // Convert the amount to a string with fixed 2 decimal places
+  const fixedAmount = amount.toFixed(0);
+
+  // Use regex to add thousand separators
+  const formattedAmount = fixedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+  // Prepend the currency symbol "₫"
+  return `₫${formattedAmount}`;
+}
+
 export function fPercent(number) {
   return numeral(number / 100).format('0.0%');
 }

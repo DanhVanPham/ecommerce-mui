@@ -1,5 +1,6 @@
 import { Box, Divider, Grid, Stack, Typography } from '@mui/material'
 import React from 'react'
+import { fCurrencyVND, fThousandSeparator } from '../../utils/formatNumber'
 
 const ProductItem = () => {
     return (
@@ -35,12 +36,12 @@ const ProductItem = () => {
                 </Grid>
                 <Grid item xs={6} md={3.5} sx={{ placeContent: 'center' }}>
                     <Stack direction='row' alignItems='center' justifyContent='center' spacing={1.5}>
-                        <Typography variant='body2' color='#9D9EA2' fontWeight={300}>4x</Typography>
-                        <Typography variant='subtitle2' fontWeight={400} color='#060709'>300.000</Typography>
+                        <Typography variant='body2' color='#9D9EA2' fontWeight={300}>{fThousandSeparator(4)}x</Typography>
+                        <Typography variant='subtitle2' fontWeight={400} color='#060709'>{fCurrencyVND(300000)}</Typography>
                     </Stack>
                 </Grid>
                 <Grid item xs={6} md={3.5} sx={{ placeContent: 'center' }}>
-                    <Typography variant='subtitle2' fontWeight={400} color='#060709' textAlign='right'>300.000</Typography>
+                    <Typography variant='subtitle2' fontWeight={400} color='#060709' textAlign='right'>{fCurrencyVND(4 * 300000)}</Typography>
                 </Grid>
             </Grid>
             <Divider />

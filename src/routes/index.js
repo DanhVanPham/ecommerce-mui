@@ -26,10 +26,11 @@ export default function Router() {
         {
             path: '/',
             children: [
+                { index: true, element: <Navigate to='/products' /> },
                 {
                     path: 'products',
                     children: [
-                        { path: '', element: <>Product List</>, },
+                        { path: '', element: <ProductsPage />, },
                         { path: ':id', element: <ProductDetailsPage /> }
                     ]
                 },
@@ -64,6 +65,7 @@ const Page500 = Loadable(lazy(() => import('../pages/errors/Page500')));
 const Page403 = Loadable(lazy(() => import('../pages/errors/Page403')));
 const Page404 = Loadable(lazy(() => import('../pages/errors/Page404')));
 
+const ProductsPage = Loadable(lazy(() => import('../pages/products')))
 const ProductDetailsPage = Loadable(lazy(() => import('../pages/products/details')))
 const PersonalSettingPage = Loadable(lazy(() => import('../pages/settings/personal')))
 const CheckoutPage = Loadable(lazy(() => import('../pages/checkout')))

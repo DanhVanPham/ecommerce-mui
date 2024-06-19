@@ -1,6 +1,7 @@
 import { Box, Button, Divider, Stack, Typography } from '@mui/material'
 import React from 'react'
 import PaymentMethod from './PaymentMethod'
+import { fCurrencyVND } from '../../utils/formatNumber'
 
 const BillPreview = () => {
     return (
@@ -17,7 +18,7 @@ const BillPreview = () => {
                     fontWeight={400}
                 >
                     <Typography color='#9D9EA2'>Tổng</Typography>
-                    <Typography color='#060709' lineHeight='21px'>1.078.000</Typography>
+                    <Typography color='#060709' lineHeight='21px'>{fCurrencyVND(1078000)}</Typography>
                 </Stack>
                 <Stack direction='row'
                     justifyContent='space-between'
@@ -26,7 +27,7 @@ const BillPreview = () => {
                     fontWeight={400}
                 >
                     <Typography color='#9D9EA2'>Phí ship</Typography>
-                    <Typography color='#060709' lineHeight='21px'>35.000</Typography>
+                    <Typography color='#060709' lineHeight='21px'>{fCurrencyVND(35000)}</Typography>
                 </Stack>
             </Stack>
             <Divider sx={{ my: 2.5 }} />
@@ -50,7 +51,7 @@ const BillPreview = () => {
                 >
                     <Typography>Đặt Hàng</Typography>
                     <Box sx={{ width: '1px', height: '12px', bgcolor: '#ffff' }} />
-                    <Typography>1.078.000</Typography>
+                    <Typography>{fCurrencyVND(1078000)}</Typography>
                 </Stack>
 
             </Button>
