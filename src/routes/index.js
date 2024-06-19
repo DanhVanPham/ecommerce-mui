@@ -40,7 +40,8 @@ export default function Router() {
                         { path: 'profile', element: <PersonalSettingPage /> }
                     ]
                 },
-                { path: 'checkout', element: <CheckoutPage /> }
+                { path: 'checkout', element: <CheckoutPage /> },
+                { path: 'payment-return', element: <PaymentReturnPage /> }
             ]
         },
         {
@@ -69,3 +70,4 @@ const ProductsPage = Loadable(lazy(() => import('../pages/products')))
 const ProductDetailsPage = Loadable(lazy(() => import('../pages/products/details')))
 const PersonalSettingPage = Loadable(lazy(() => import('../pages/settings/personal')))
 const CheckoutPage = Loadable(lazy(() => import('../pages/checkout')))
+const PaymentReturnPage = Loadable(lazy(() => import('../pages/payment/PaymentReturn')))
