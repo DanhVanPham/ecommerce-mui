@@ -1,17 +1,14 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
-import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Outlet, useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import { Stack } from "@mui/material";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import CartButton from "./CartButton";
-import ProductFilter from "./filter";
+import CartButton from "./cart/CartButton";
 import { PATH_APP } from "../routes/paths";
+import AccountButton from "./AccountButton";
 
 export default function PrivateLayout() {
   const router = useNavigate();
@@ -54,9 +51,7 @@ export default function PrivateLayout() {
             </Typography>
             <SearchBar />
             <Stack direction="row" spacing={0.5} alignContent="center">
-              <IconButton>
-                <PersonOutlineIcon />
-              </IconButton>
+              <AccountButton />
               <CartButton />
             </Stack>
           </Stack>

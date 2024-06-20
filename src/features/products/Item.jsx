@@ -19,7 +19,7 @@ const ProductItem = ({ data }) => {
   };
 
   const handleViewDetails = () => {
-    router(PATH_APP.products.viewDetail(2));
+    router(PATH_APP.products.viewDetail(id));
   };
 
   return (

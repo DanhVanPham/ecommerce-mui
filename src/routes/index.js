@@ -38,19 +38,23 @@ export default function Router() {
         },
         {
           path: "users",
-          children: [{ path: "profile", element: <PersonalSettingPage /> }],
+          children: [
+            { path: "profile", element: <PersonalSettingPage /> },
+            { path: "purchase", element: <PurchasePage /> },
+          ],
         },
         { path: "checkout", element: <CheckoutPage /> },
-      ],
-    },
-    {
-      path: "*",
-      element: <LogoOnlyLayout />,
-      children: [
-        { path: "403", element: <Page403 /> },
-        { path: "404", element: <Page404 /> },
-        { path: "500", element: <Page500 /> },
-        { path: "*", element: <Navigate to="/404" replace /> },
+        { path: "payment-return", element: <PaymentReturnPage /> },
+        {
+          path: "*",
+          element: <LogoOnlyLayout />,
+          children: [
+            { path: "403", element: <Page403 /> },
+            { path: "404", element: <Page404 /> },
+            { path: "500", element: <Page500 /> },
+            { path: "*", element: <Navigate to="/404" replace /> },
+          ],
+        },
       ],
     },
   ]);
@@ -73,3 +77,7 @@ const PersonalSettingPage = Loadable(
   lazy(() => import("../pages/settings/personal"))
 );
 const CheckoutPage = Loadable(lazy(() => import("../pages/checkout")));
+const PurchasePage = Loadable(lazy(() => import("../pages/purchase")));
+const PaymentReturnPage = Loadable(
+  lazy(() => import("../pages/payment/PaymentReturn"))
+);

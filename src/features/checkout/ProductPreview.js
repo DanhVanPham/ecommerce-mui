@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 const ProductPreview = () => {
   const cartItems = useSelector((state) => state.cart.items);
-  console.log({ cartItems });
+
   return (
     <GroupBox
       title={

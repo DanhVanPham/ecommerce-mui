@@ -1,6 +1,6 @@
 import { Box, Divider, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
-import { fThousandSeparator } from "../../utils/formatNumber";
+import { fCurrencyVND, fThousandSeparator } from "../../utils/formatNumber";
 
 const ProductItem = ({ data }) => {
   const { imageUrl, name, price, quantity } = data ?? {};
@@ -50,7 +50,7 @@ const ProductItem = ({ data }) => {
               {fThousandSeparator(quantity)}x
             </Typography>
             <Typography variant="subtitle2" fontWeight={400} color="#060709">
-              {fThousandSeparator(price)}
+              {fCurrencyVND(price)}
             </Typography>
           </Stack>
         </Grid>
@@ -61,7 +61,7 @@ const ProductItem = ({ data }) => {
             color="#060709"
             textAlign="right"
           >
-            {fThousandSeparator(quantity * price)}
+            {fCurrencyVND(quantity * price)}
           </Typography>
         </Grid>
       </Grid>

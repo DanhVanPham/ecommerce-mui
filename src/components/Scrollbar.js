@@ -55,16 +55,14 @@ const Scrollbar = forwardRef(({ children, sx, ...other }, ref) => {
   }
 
   return (
-    <RootStyle>
-      <SimpleBarStyle timeout={500} clickOnTrack={false}
-        scrollableNodeProps={{
-          ref: ref,
-        }}
-        sx={{ ...isMobile && mobileStyles, ...sx }}
-        {...other}>
-        {children}
-      </SimpleBarStyle>
-    </RootStyle>
+    <SimpleBarStyle timeout={500} clickOnTrack={false}
+      scrollableNodeProps={{
+        ref: ref,
+      }}
+      sx={{ ...isMobile && mobileStyles, ...sx }}
+      {...other}>
+      {children}
+    </SimpleBarStyle>
   );
 })
 
