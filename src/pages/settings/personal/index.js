@@ -3,17 +3,21 @@ import { Container } from "@mui/material";
 import Page from "../../../components/Page";
 import HeaderBreadcrumbs from "../../../components/HeaderBreadcrumbs";
 //
-import PersonalSetting from '../../../features/personal-setting'
+import PersonalSetting from "../../../features/personal-setting";
 // ----------------------------------------------------------------------
 
 export default function PersonalSettingPage() {
-
-    return (
-        <Page title={'Personal settings'} sx={{ height: '100%' }}>
-            <Container maxWidth={'lg'}>
-                <HeaderBreadcrumbs heading={'Personal settings'} />
-                <PersonalSetting />
-            </Container>
-        </Page>
-    )
+  return (
+    <Page title={"Personal settings"} sx={{ height: "100%" }}>
+      <Container maxWidth={"lg"}>
+        <HeaderBreadcrumbs
+          heading={"Personal settings"}
+          sx={{
+            mt: 3,
+          }}
+        />
+        <PersonalSetting />
+      </Container>
+    </Page>
+  );
 }

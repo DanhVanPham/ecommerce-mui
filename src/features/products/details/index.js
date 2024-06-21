@@ -3,12 +3,11 @@ import DetailContainer from "./DetailContainer";
 import { Container } from "@mui/material";
 
 const ProductDetails = () => {
-    return (
-        <Container maxWidth={'false'} >
-            <DetailContainer />
-
-        </Container>
-    );
+  return (
+    <Container maxWidth={"false"}>
+      <DetailContainer />
+    </Container>
+  );
 };
 
 export default ProductDetails;
