@@ -1,13 +1,13 @@
-import React from 'react'
-import Page from '../../../components/Page'
-import ProductDetailsContainer from '../../../features/products/details'
+import React from "react";
+import Page from "../../../components/Page";
+import ProductDetailsContainer from "../../../features/products/details";
 
 const ProductDetails = () => {
-    return (
-        <Page title='Product Details Page'>
-            <ProductDetailsContainer />
-        </Page>
-    )
-}
+  return (
+    <Page title="Trang chi tiết sản phẩm">
+      <ProductDetailsContainer />
+    </Page>
+  );
+};
 
-export default ProductDetails
+export default ProductDetails;

@@ -110,7 +110,7 @@ const ProductItem = ({ data }) => {
               35
             </Typography>
             <Typography fontSize={14} fontWeight={400} color="#C8C9CB">
-              Reviews
+              Bình luận
             </Typography>
           </Stack>
         </Stack>

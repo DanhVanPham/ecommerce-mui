@@ -1,17 +1,17 @@
-import { useMemo } from 'react';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useMemo } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
 // form
-import { useForm } from 'react-hook-form';
+import { useForm } from "react-hook-form";
 // notistack
-import { useSnackbar } from 'notistack';
+import { useSnackbar } from "notistack";
 // others
-import { LoginForm } from './LoginForm';
-import { useDispatch } from '../../../app/store';
+import { LoginForm } from "./LoginForm";
+import { useDispatch } from "../../../app/store";
 
 // ----------------------------------------------------------------------
 const defaultValues = {
-  username: '',
-  password: '',
+  username: "",
+  password: "",
   remember: true,
 };
 export default function LoginContainer() {
@@ -22,7 +22,7 @@ export default function LoginContainer() {
   const methods = useForm({
     // resolver: yupResolver(schema),
     defaultValues,
-    mode: 'onSubmit'
+    mode: "onSubmit",
   });
 
   const { setError } = methods;
@@ -31,7 +31,7 @@ export default function LoginContainer() {
   const onSubmit = async (data) => {
     try {
       // await dispatch(authApi.endpoints.login.initiate(data)).unwrap();
-      enqueueSnackbar('Login successfully');
+      enqueueSnackbar("Đăng nhập thành công");
     } catch (error) {
       showLoginError(error);
     }
@@ -39,10 +39,8 @@ export default function LoginContainer() {
 
   // get message of error
   const showLoginError = (error) => {
-    enqueueSnackbar('Login failed!', { variant: 'error' });
-  }
+    enqueueSnackbar("Đăng nhập thất bại!", { variant: "error" });
+  };
   // render
-  return <LoginForm
-    onSubmit={onSubmit}
-    methods={methods} />
+  return <LoginForm onSubmit={onSubmit} methods={methods} />;
 }

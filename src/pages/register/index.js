@@ -1,33 +1,42 @@
-import { connect } from 'react-redux'
-import { Link as RouterLink } from 'react-router-dom';
+import { connect } from "react-redux";
+import { Link as RouterLink } from "react-router-dom";
 // @mui
-import { Box, Link, Container, Typography } from '@mui/material';
-import useResponsive from '../../hooks/useResponsive';
+import { Box, Link, Container, Typography } from "@mui/material";
+import useResponsive from "../../hooks/useResponsive";
 // routes
-import { PATH_AUTH } from '../../routes/paths';
+import { PATH_AUTH } from "../../routes/paths";
 // components
-import Page from '../../components/Page';
-import Logo from '../../components/Logo';
-import Image from '../../components/Image';
+import Page from "../../components/Page";
+import Image from "../../components/Image";
 // sections
-import { RegisterContainer } from '../../features/auth/register';
-import { RootStyle, HeaderStyle, SectionStyle, ContentStyle } from './Register.styles'
+import { RegisterContainer } from "../../features/auth/register";
+import {
+  RootStyle,
+  HeaderStyle,
+  SectionStyle,
+  ContentStyle,
+} from "./Register.styles";
+import Logo from "../../layouts/Logo";
 // ----------------------------------------------------------------------
 
 export function Register() {
-  const smUp = useResponsive('up', 'sm');
-  const mdUp = useResponsive('up', 'md');
+  const smUp = useResponsive("up", "sm");
+  const mdUp = useResponsive("up", "md");
 
   return (
-    <Page title={'Register'}>
+    <Page title={"Đăng ký"}>
       <RootStyle>
         <HeaderStyle>
           <Logo />
           {smUp && (
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>
-              Already have an account?{' '}
-              <Link variant="subtitle2" component={RouterLink} to={PATH_AUTH.login}>
-                Login
+              Đã có tài khoản?{" "}
+              <Link
+                variant="subtitle2"
+                component={RouterLink}
+                to={PATH_AUTH.login}
+              >
+                Đăng nhập
               </Link>
             </Typography>
           )}
@@ -35,8 +44,11 @@ export function Register() {
 
         {mdUp && (
           <SectionStyle>
-            <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-              Sign Up to Ecommerce
+            <Typography
+              variant="h3"
+              sx={{ px: 5, mt: 10, mb: 5, textAlign: "center" }}
+            >
+              Đăng ký vào hệ thống
             </Typography>
             <Image
               visibleByDefault
@@ -49,28 +61,36 @@ export function Register() {
 
         <Container>
           <ContentStyle>
-            <Box sx={{ mb: 1.5, display: 'flex', alignItems: 'center' }}>
+            <Box sx={{ mb: 1.5, display: "flex", alignItems: "center" }}>
               <Box sx={{ flexGrow: 1 }}>
-                <Typography variant="h3" sx={{ color: '#1A73E8' }}>Sign up</Typography>
-                <Typography variant="h6" sx={{ mb: 1.5 }}>Welcome to the Ecommerce!</Typography>
+                <Typography variant="h3" sx={{ color: "#1A73E8" }}>
+                  Đăng ký
+                </Typography>
+                <Typography variant="h6" sx={{ mb: 1.5 }}>
+                  Chào mừng đến Belong Love
+                </Typography>
               </Box>
             </Box>
 
             <RegisterContainer />
 
             {!smUp && (
-              <Typography variant="body2" sx={{ mt: 3, textAlign: 'center' }}>
-                Already have an account?{' '}
-                <Link variant="subtitle2" to={PATH_AUTH.login} component={RouterLink}>
-                  Login
+              <Typography variant="body2" sx={{ mt: 3, textAlign: "center" }}>
+                Đã có tài khoản?{" "}
+                <Link
+                  variant="subtitle2"
+                  to={PATH_AUTH.login}
+                  component={RouterLink}
+                >
+                  Đăng nhập
                 </Link>
               </Typography>
             )}
           </ContentStyle>
         </Container>
       </RootStyle>
-    </Page >
+    </Page>
   );
 }
 
-export default Register
+export default Register;

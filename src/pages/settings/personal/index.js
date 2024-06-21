@@ -8,10 +8,10 @@ import PersonalSetting from "../../../features/personal-setting";
 
 export default function PersonalSettingPage() {
   return (
-    <Page title={"Personal settings"} sx={{ height: "100%" }}>
+    <Page title={"Thiết lập cá nhân"} sx={{ height: "100%" }}>
       <Container maxWidth={"lg"}>
         <HeaderBreadcrumbs
-          heading={"Personal settings"}
+          heading={"Thiết lập cá nhân"}
           sx={{
             mt: 3,
           }}

@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
 // @mui
 import {
   Link,
@@ -8,15 +8,12 @@ import {
   IconButton,
   InputAdornment,
   Typography,
-} from '@mui/material';
-import { LoadingButton } from '@mui/lab';
+} from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 // components
-import Iconify from '../../../components/Iconify';
-import {
-  FormProvider,
-  RHFTextField,
-} from '../../../components/hook-form';
-import { PATH_AUTH } from '../../../routes/paths';
+import Iconify from "../../../components/Iconify";
+import { FormProvider, RHFTextField } from "../../../components/hook-form";
+import { PATH_AUTH } from "../../../routes/paths";
 
 // ----------------------------------------------------------------------
 export function LoginForm({ onSubmit, methods }) {
@@ -26,28 +23,29 @@ export function LoginForm({ onSubmit, methods }) {
     formState: { errors, isSubmitting },
   } = methods;
   return (
-    <FormProvider methods={methods}
-      onSubmit={handleSubmit(onSubmit)}>
+    <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={3}>
-        {!!errors.afterSubmit &&
-          <Alert severity="error">{errors.afterSubmit.message}</Alert>}
+        {!!errors.afterSubmit && (
+          <Alert severity="error">{errors.afterSubmit.message}</Alert>
+        )}
 
-        <RHFTextField name="username"
-          isManualShrink
-          label={'Username or Email address'} />
+        <RHFTextField name="username" isManualShrink label={"Tên tài khoản"} />
 
         <RHFTextField
           name="password"
           isManualShrink
-          label={'Password'}
-          type={isPasswordShown ? 'text' : 'password'}
+          label={"Mật khẩu"}
+          type={isPasswordShown ? "text" : "password"}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton
                   onClick={() => setIsPasswordShown(!isPasswordShown)}
-                  edge="end">
-                  <Iconify icon={isPasswordShown ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                  edge="end"
+                >
+                  <Iconify
+                    icon={isPasswordShown ? "eva:eye-fill" : "eva:eye-off-fill"}
+                  />
                 </IconButton>
               </InputAdornment>
             ),
@@ -55,15 +53,18 @@ export function LoginForm({ onSubmit, methods }) {
         />
       </Stack>
 
-      <Stack direction="row"
+      <Stack
+        direction="row"
         alignItems="center"
         justifyContent="flex-end"
-        sx={{ my: 2 }}>
-        <Link component={RouterLink}
+        sx={{ my: 2 }}
+      >
+        <Link
+          component={RouterLink}
           variant="subtitle2"
           to={PATH_AUTH.resetPassword}
         >
-          Forgot Password?
+          Quên mật khẩu?
         </Link>
       </Stack>
 
@@ -72,20 +73,21 @@ export function LoginForm({ onSubmit, methods }) {
         size="large"
         type="submit"
         variant="contained"
-        loading={isSubmitting}>
-        Login
+        loading={isSubmitting}
+      >
+        Đăng nhập
       </LoadingButton>
 
-      <Typography variant="body2" sx={{ mt: 3, textAlign: 'center' }}>
-        Don't have an account?{' '}
-        <Link component={RouterLink}
+      <Typography variant="body2" sx={{ mt: 3, textAlign: "center" }}>
+        Chưa có tài khoản?{" "}
+        <Link
+          component={RouterLink}
           variant="subtitle2"
           to={PATH_AUTH.register}
         >
-          Create an account
+          Tạo tài khoản mới
         </Link>
       </Typography>
     </FormProvider>
   );
 }
-

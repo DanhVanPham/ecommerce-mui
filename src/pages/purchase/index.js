@@ -4,7 +4,7 @@ import PurchaseContainer from "../../features/purchase";
 
 const PurchasePage = () => {
   return (
-    <Page title="Purchase Page">
+    <Page title="Trang đơn hàng">
       <PurchaseContainer />
     </Page>
   );
