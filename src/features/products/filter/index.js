@@ -1,6 +1,7 @@
-import { Popover, Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import React from "react";
 import BrandFilter from "./BrandFilter";
+import AgeFilter from "./AgeFilter";
 
 const ProductFilter = () => {
   return (
@@ -13,8 +14,9 @@ const ProductFilter = () => {
         px: 1,
       }}
     >
-      <Stack>
+      <Stack direction='row' flexWrap='wrap' spacing={3.75}>
         <BrandFilter />
+        <AgeFilter />
       </Stack>
     </Stack>
   );
