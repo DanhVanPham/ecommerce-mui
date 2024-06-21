@@ -14,7 +14,7 @@ const ProductFilter = () => {
         px: 1,
       }}
     >
-      <Stack direction='row' flexWrap='wrap' spacing={3.75}>
+      <Stack direction="row" flexWrap="wrap" spacing={3.75}>
         <BrandFilter />
         <AgeFilter />
       </Stack>

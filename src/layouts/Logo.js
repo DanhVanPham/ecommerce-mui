@@ -2,9 +2,11 @@ import { Box, Stack, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { PATH_APP } from "../routes/paths";
+import useResponsive from "../hooks/useResponsive";
 
 const Logo = ({ sx, ...props }) => {
   const router = useNavigate();
+  const isSmDown = useResponsive("down", "sm");
 
   return (
     <Stack
@@ -45,16 +47,18 @@ const Logo = ({ sx, ...props }) => {
         >
           BELONG LOVE
         </Typography>
-        <Typography
-          variant="caption"
-          component="div"
-          sx={{
-            fontWeight: "inherit",
-            fontSize: "13px",
-          }}
-        >
-          Sữa tốt, mẹ khỏe, con lớn ngoan
-        </Typography>
+        {!isSmDown && (
+          <Typography
+            variant="caption"
+            component="div"
+            sx={{
+              fontWeight: "inherit",
+              fontSize: "13px",
+            }}
+          >
+            Sữa tốt, mẹ khỏe, con lớn ngoan
+          </Typography>
+        )}
       </Box>
     </Stack>
   );
