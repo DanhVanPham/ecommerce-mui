@@ -12,8 +12,15 @@ import Comments from "./Comments";
 import { AddCommentForm } from "./AddCommentForm";
 import { useForm } from "react-hook-form";
 import ImagesPreview from "./ImagesPreview";
+import { fCurrencyVND } from "../../../utils/formatNumber";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../app/redux/cart/cartSlice";
+import { useNavigate } from "react-router-dom";
+import { PATH_APP } from "../../../routes/paths";
 
-const DetailContainer = ({ data: productData }) => {
+const DetailContainer = ({ data }) => {
+  const dispatch = useDispatch();
+  const router = useNavigate();
 
   // Call api
   const mockData = {
@@ -67,22 +74,14 @@ Quà khi mua 2 sản phẩm (hết quà hoàn 25.000₫)",
     ],
   };
 
-  const data = mockData;
+  const { rating, comments } = mockData || {};
 
-  const {
-    brand,
-    name,
-    originName,
-    price,
-    rating,
-    offerDesc,
-    desc,
-    nutrients,
-    comments,
-  } = data || {};
+  const { price, size } = data ?? {};
+  const { name, image, description, milkBrand, startAge, endAge } =
+    data?.product ?? {};
 
   const defaultValues = {
-    comment: '',
+    comment: "",
     rating: 0,
   };
 
@@ -107,10 +106,23 @@ Quà khi mua 2 sản phẩm (hết quà hoàn 25.000₫)",
   // handle submision
   const onSubmit = (data) => postComment(data);
 
+  const handleAddToCart = () => {
+    dispatch(addToCart(data));
+  };
+
+  const handlePaymentPage = () => {
+    router(PATH_APP.checkout);
+  };
+
+  const handlePaymentNow = () => {
+    handleAddToCart();
+    handlePaymentPage();
+  };
+
   return (
     <Grid container p={1}>
       <Grid item xs={12} sm={6}>
-        <ImagesPreview images={productData?.imageBase64} />
+        <ImagesPreview images={image?.content} />
       </Grid>
       <Grid item xs={12} sm={6}>
         <Stack direction={"column"} spacing={1}>
@@ -119,31 +131,24 @@ Quà khi mua 2 sản phẩm (hết quà hoàn 25.000₫)",
             color={(theme) => theme.palette.grey[500]}
           >
             Thương hiệu{" "}
-            <Box
-              display="inline"
-              sx={{ textDecoration: "underline" }}
-            >
-              {brand}
+            <Box display="inline" sx={{ textDecoration: "underline" }}>
+              {milkBrand?.name}
             </Box>
           </Typography>
-          <Typography variant="h5">{productData?.name}</Typography>
+          <Typography variant="h5">{name}</Typography>
           <Stack direction={"row"}>
             <Chip
               size="small"
-              label={originName}
+              label={milkBrand?.company?.nation}
               variant="filled"
             />
           </Stack>
           <Stack direction={"row"} justifyContent={"space-between"}>
             <Typography variant="body2" fontWeight={400}>
-              {price} {"Vnđ"}
+              {fCurrencyVND(price)}
             </Typography>
             <Stack direction={"row"} spacing={1}>
-              <Stack
-                direction={"row"}
-                spacing={1}
-                alignItems={"center"}
-              >
+              <Stack direction={"row"} spacing={1} alignItems={"center"}>
                 <Iconify icon={"emojione:star"} />
                 <Typography variant="body2" fontWeight={600}>
                   {rating}/5
@@ -162,46 +167,28 @@ Quà khi mua 2 sản phẩm (hết quà hoàn 25.000₫)",
               </Typography>
             </Stack>
           </Stack>
-          <Box
-            display="inline"
-            color={(theme) => theme.palette.grey[500]}
-          >
-            2x
-          </Box>
           <Stack direction={"column"} spacing={1}>
             <Typography variant="body2" fontWeight={600}>
               Mô tả
             </Typography>
-            <Typography variant="body2">{productData?.description}</Typography>
+            <Typography variant="body2">{description}</Typography>
           </Stack>
           <Stack direction={"column"} spacing={1}>
             <Typography variant="body2" fontWeight={600}>
               Phân loại
             </Typography>
             <Stack direction={"row"} spacing={1}>
-              {/* {nutrients?.map((item) => {
-                                return (
-                                    <Chip
-                                        key={item?.id}
-                                        label={item?.name}
-                                        sx={{
-                                            borderRadius: 1,
-                                            border: "1px solid",
-                                            borderColor: "#edeff1",
-                                            ...(currentNutrient?.id ===
-                                                item?.id && {
-                                            }),
-                                            cursor: "pointer",
-                                        }}
-                                        onClick={() => {
-                                            setCurrentNutrient(item);
-                                            console.log(currentNutrient, item);
-                                        }}
-                                    />
-                                );
-                            })} */}
               <Chip
-                label={productData?.ageRange}
+                label={`${startAge} - ${endAge} tuổi`}
+                sx={{
+                  borderRadius: 1,
+                  border: "1px solid",
+                  borderColor: "#edeff1",
+                  cursor: "pointer",
+                }}
+              />
+              <Chip
+                label={`${size} ml`}
                 sx={{
                   borderRadius: 1,
                   border: "1px solid",
@@ -221,82 +208,36 @@ Quà khi mua 2 sản phẩm (hết quà hoàn 25.000₫)",
             }}
           >
             <Stack direction={"column"} width={1} spacing={2}>
-              {/* <Stack width={1} spacing={1}>
-                                <Stack
-                                    direction={"row"}
-                                    justifyContent={"space-between"}
-                                    width={1}
-                                >
-                                    <Typography component="div" variant="body2">
-                                        Friso Mum Gold{" "}
-                                        <Box
-                                            display="inline"
-                                            color={(theme) =>
-                                                theme.palette.grey[500]
-                                            }
-                                        >
-                                            2x
-                                        </Box>
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        fontWeight={600}
-                                    >
-                                        536.000
-                                    </Typography>
-                                </Stack>
-                                <Stack
-                                    width={1}
-                                    direction={"row"}
-                                    justifyContent={"space-between"}
-                                >
-                                    <Typography variant="body2">
-                                        Add Intergra Pack - 4g
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        fontWeight={600}
-                                    >
-                                        536
-                                    </Typography>
-                                </Stack>
-                            </Stack> */}
-              {/* <Divider /> */}
-              <Stack
-                direction={"row"}
-                justifyContent={"space-between"}
-              >
+              <Stack direction={"row"} justifyContent={"space-between"}>
                 <Button
                   size={"large"}
                   variant="contained"
                   sx={{
                     borderRadius: 4,
                   }}
+                  onClick={handleAddToCart}
                 >
-                  Đặt trước
+                  Thêm vào giỏ hàng
                 </Button>
                 <Button
                   size={"large"}
+                  color="warning"
                   variant="contained"
                   sx={{
                     borderRadius: 4,
                   }}
+                  onClick={handlePaymentNow}
                 >
-                  Thêm vào giỏ hàng
+                  Mua ngay
                 </Button>
               </Stack>
               <Divider />
               <Stack direction={"column"} spacing={1}>
-                <Stack
-                  direction={"row"}
-                  alignItems={"center"}
-                  spacing={1}
-                >
+                <Stack direction={"row"} alignItems={"center"} spacing={1}>
                   <Iconify
                     icon={"ph:check-circle"}
                     sx={{
-                      color: (theme) =>
-                        theme.palette.success.main,
+                      color: (theme) => theme.palette.success.main,
                       width: 18,
                       height: 18,
                     }}
@@ -305,35 +246,24 @@ Quà khi mua 2 sản phẩm (hết quà hoàn 25.000₫)",
                     Hoàn tiền đổi trả trong 7 ngày
                   </Typography>
                 </Stack>
-                <Stack
-                  direction={"row"}
-                  alignItems={"center"}
-                  spacing={1}
-                >
+                <Stack direction={"row"} alignItems={"center"} spacing={1}>
                   <Iconify
                     icon={"ph:check-circle"}
                     sx={{
-                      color: (theme) =>
-                        theme.palette.success.main,
+                      color: (theme) => theme.palette.success.main,
                       width: 18,
                       height: 18,
                     }}
                   />
                   <Typography variant="body2">
-                    Miễn phí giao hàng đơn từ 500.000 đ
-                    trong 10 km đầu tiên
+                    Miễn phí giao hàng đơn từ 500.000 đ trong 10 km đầu tiên
                   </Typography>
                 </Stack>
-                <Stack
-                  direction={"row"}
-                  alignItems={"center"}
-                  spacing={1}
-                >
+                <Stack direction={"row"} alignItems={"center"} spacing={1}>
                   <Iconify
                     icon={"ph:check-circle"}
                     sx={{
-                      color: (theme) =>
-                        theme.palette.success.main,
+                      color: (theme) => theme.palette.success.main,
                       width: 18,
                       height: 18,
                     }}
@@ -368,109 +298,8 @@ Quà khi mua 2 sản phẩm (hết quà hoàn 25.000₫)",
             <AddCommentForm methods={methods} onSubmit={onSubmit} />
           </Stack>
         </Stack>
-        <Stack
-          width={1}
-          direction={"row"}
-          justifyContent={"space-between"}
-        >
-          <Typography variant="body2">
-            Add Intergra Pack - 4g
-          </Typography>
-          <Typography variant="body2" fontWeight={600}>
-            536
-          </Typography>
-        </Stack>
-      </Stack>
-      <Divider />
-      <Stack direction={"row"} justifyContent={"space-between"}>
-        <Button
-          size={"large"}
-          variant="contained"
-          sx={{
-            borderRadius: 4,
-          }}
-        >
-          Đặt trước
-        </Button>
-        <Button
-          size={"large"}
-          variant="contained"
-          sx={{
-            borderRadius: 4,
-          }}
-        >
-          Thêm vào giỏ hàng
-        </Button>
-      </Stack>
-      <Divider />
-      <Stack direction={"column"} spacing={1}>
-        <Stack direction={"row"} alignItems={"center"} spacing={1}>
-          <Iconify
-            icon={"ph:check-circle"}
-            sx={{
-              color: (theme) => theme.palette.success.main,
-              width: 18,
-              height: 18,
-            }}
-          />
-          <Typography variant="body2">
-            Hoàn tiền đổi trả trong 7 ngày
-          </Typography>
-        </Stack>
-        <Stack direction={"row"} alignItems={"center"} spacing={1}>
-          <Iconify
-            icon={"ph:check-circle"}
-            sx={{
-              color: (theme) => theme.palette.success.main,
-              width: 18,
-              height: 18,
-            }}
-          />
-          <Typography variant="body2">
-            Miễn phí giao hàng đơn từ 500.000 đ trong 10 km đầu tiên
-          </Typography>
-        </Stack>
-        <Stack direction={"row"} alignItems={"center"} spacing={1}>
-          <Iconify
-            icon={"ph:check-circle"}
-            sx={{
-              color: (theme) => theme.palette.success.main,
-              width: 18,
-              height: 18,
-            }}
-          />
-          <Typography variant="body2">
-            Giao hàng thu tiền, thanh toán
-          </Typography>
-        </Stack>
-      </Stack>
-    </Stack>
-          </Box >
-  <Stack direction={"column"} spacing={1}>
-    <Typography variant="body2" fontWeight={600}>
-      Bình luận
-    </Typography>
-    <Comments data={comments} />
-    <Stack direction={"row"} width={1}>
-      <Button
-        variant="text"
-        sx={{
-          background: "none",
-          p: 0,
-          "&:hover": {
-            background: "none",
-            textDecorationLine: "underline",
-          },
-        }}
-      >
-        Hiển thị thêm...
-      </Button>
-    </Stack>
-    <AddCommentForm methods={methods} onSubmit={onSubmit} />
-  </Stack>
-        </Stack >
-      </Grid >
-    </Grid >
+      </Grid>
+    </Grid>
   );
 };
 
