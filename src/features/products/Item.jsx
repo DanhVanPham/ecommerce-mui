@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../../app/redux/cart/cartSlice";
 
 const ProductItem = ({ data }) => {
-	const { id, name, category, imageUrl, price } = data ?? {};
+	const { id, name, milkBrand, image, price } = data ?? {};
 	const router = useNavigate();
 
 	const dispatch = useDispatch();
@@ -21,6 +21,10 @@ const ProductItem = ({ data }) => {
 	const handleViewDetails = () => {
 		router(PATH_APP.products.viewDetail(id));
 	};
+
+	const imageUrl = image?.content
+		? "data:image/jpeg;base64," + btoa(image?.content)
+		: "";
 
 	return (
 		<Stack
@@ -63,7 +67,7 @@ const ProductItem = ({ data }) => {
 					textAlign="center"
 					noWrap
 				>
-					{category}
+					{milkBrand?.name}
 				</Typography>
 				<Typography
 					fontSize={16}

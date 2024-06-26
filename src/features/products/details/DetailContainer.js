@@ -7,14 +7,14 @@ import {
     Divider,
     Button,
 } from "@mui/material";
-import { useState } from "react";
 import Iconify from "../../../components/Iconify";
 import Comments from "./Comments";
 import { AddCommentForm } from "./AddCommentForm";
 import { useForm } from "react-hook-form";
 import ImagesPreview from "./ImagesPreview";
 
-const DetailContainer = () => {
+const DetailContainer = ({ data: productData }) => {
+
     // Call api
     const mockData = {
         brand: "Friso Gold",
@@ -81,8 +81,6 @@ Quà khi mua 2 sản phẩm (hết quà hoàn 25.000₫)",
         comments,
     } = data || {};
 
-    const [currentNutrient, setCurrentNutrient] = useState();
-
     const defaultValues = {
         comment: '',
         rating: 0,
@@ -114,7 +112,7 @@ Quà khi mua 2 sản phẩm (hết quà hoàn 25.000₫)",
     return (
         <Grid container p={1}>
             <Grid item xs={12} sm={6}>
-                <ImagesPreview />
+                <ImagesPreview images={productData?.imageBase64} />
             </Grid>
             <Grid item xs={12} sm={6}>
                 <Stack direction={"column"} spacing={1}>
@@ -130,7 +128,7 @@ Quà khi mua 2 sản phẩm (hết quà hoàn 25.000₫)",
                             {brand}
                         </Box>
                     </Typography>
-                    <Typography variant="h5">{name}</Typography>
+                    <Typography variant="h5">{productData?.name}</Typography>
                     <Stack direction={"row"}>
                         <Chip
                             size="small"
@@ -199,14 +197,14 @@ Quà khi mua 2 sản phẩm (hết quà hoàn 25.000₫)",
                         <Typography variant="body2" fontWeight={600}>
                             Mô tả
                         </Typography>
-                        <Typography variant="body2">{desc}</Typography>
+                        <Typography variant="body2">{productData?.description}</Typography>
                     </Stack>
                     <Stack direction={"column"} spacing={1}>
                         <Typography variant="body2" fontWeight={600}>
                             Phân loại
                         </Typography>
                         <Stack direction={"row"} spacing={1}>
-                            {nutrients?.map((item) => {
+                            {/* {nutrients?.map((item) => {
                                 return (
                                     <Chip
                                         key={item?.id}
@@ -226,7 +224,16 @@ Quà khi mua 2 sản phẩm (hết quà hoàn 25.000₫)",
                                         }}
                                     />
                                 );
-                            })}
+                            })} */}
+                            <Chip
+                                label={productData?.ageRange}
+                                sx={{
+                                    borderRadius: 1,
+                                    border: "1px solid",
+                                    borderColor: "#edeff1",
+                                    cursor: "pointer",
+                                }}
+                            />
                         </Stack>
                     </Stack>
                     <Box
@@ -239,7 +246,7 @@ Quà khi mua 2 sản phẩm (hết quà hoàn 25.000₫)",
                         }}
                     >
                         <Stack direction={"column"} width={1} spacing={2}>
-                            <Stack width={1} spacing={1}>
+                            {/* <Stack width={1} spacing={1}>
                                 <Stack
                                     direction={"row"}
                                     justifyContent={"space-between"}
@@ -278,8 +285,8 @@ Quà khi mua 2 sản phẩm (hết quà hoàn 25.000₫)",
                                         536
                                     </Typography>
                                 </Stack>
-                            </Stack>
-                            <Divider />
+                            </Stack> */}
+                            {/* <Divider /> */}
                             <Stack
                                 direction={"row"}
                                 justifyContent={"space-between"}
