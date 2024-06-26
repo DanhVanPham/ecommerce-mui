@@ -1,10 +1,10 @@
-import { Button, IconButton, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import StarIcon from "@mui/icons-material/Star";
 import AddIcon from "@mui/icons-material/Add";
 import { PATH_APP } from "../../routes/paths";
-import { fThousandSeparator } from "../../utils/formatNumber";
+import { fCurrencyVND } from "../../utils/formatNumber";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../app/redux/cart/cartSlice";
 
@@ -133,7 +133,7 @@ const ProductItem = ({ data }) => {
 						fontWeight={600}
 						color="#EB2606"
 					>
-						{fThousandSeparator(price)}
+						{fCurrencyVND(price)}
 					</Typography>
 					<Button
 						variant="outlined"

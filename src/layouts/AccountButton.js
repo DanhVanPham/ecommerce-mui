@@ -20,7 +20,7 @@ const AccountButton = () => {
 
   const handleClickItem = (item) => {
     const { value, url } = item ?? {};
-    console.log(url, value);
+
     switch (value) {
       case MENU_ITEM.signIn:
       case MENU_ITEM.signUp:

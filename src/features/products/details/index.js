@@ -9,24 +9,24 @@ import EmptyResult from "../../../components/EmptyResult";
 import LoadingScreen from "../../../components/LoadingScreen";
 
 const ProductDetails = () => {
-    const { id } = useParams()
+  const { id } = useParams()
 
-    const responseProductDetails = useGetProductByIdQuery(id, { skip: !id })
-    const { data } = responseProductDetails;
+  const responseProductDetails = useGetProductByIdQuery(id, { skip: !id })
+  const { data } = responseProductDetails;
 
-    const state = specifyState(responseProductDetails);
+  const state = specifyState(responseProductDetails);
 
-    return (
-        <Container maxWidth={'false'} >
-            <StateManager state={state}
-                loadingState={<LoadingScreen />}
-                emptyState={<EmptyResult />}
-                errorState={<ErrorAlert />}
-            >
-                <DetailContainer data={data} />
-            </StateManager>
-        </Container>
-    );
+  return (
+    <Container maxWidth={'false'} >
+      <StateManager state={state}
+        loadingState={<LoadingScreen />}
+        emptyState={<EmptyResult />}
+        errorState={<ErrorAlert />}
+      >
+        <DetailContainer data={data} />
+      </StateManager>
+    </Container>
+  );
 };
 
 export default ProductDetails;
