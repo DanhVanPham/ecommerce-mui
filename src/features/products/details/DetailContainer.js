@@ -71,7 +71,7 @@ const DetailContainer = ({ data }) => {
   return (
     <Grid container p={1}>
       <Grid item xs={12} sm={6}>
-        <ImagesPreview images={image?.content} />
+        <ImagesPreview image={image?.content} />
       </Grid>
       <Grid item xs={12} sm={6}>
         <Stack direction={"column"} spacing={1}>
@@ -147,83 +147,29 @@ const DetailContainer = ({ data }) => {
               />
             </Stack>
           </Stack>
-          <Box
-            sx={{
-              display: "flex",
-              width: 1,
-              boxShadow: 5,
-              borderRadius: 1,
-              p: 1,
-            }}
-          >
-            <Stack direction={"column"} width={1} spacing={2}>
-              <Stack direction={"row"} justifyContent={"space-between"}>
-                <Button
-                  size={"large"}
-                  variant="contained"
-                  sx={{
-                    borderRadius: 4,
-                  }}
-                  onClick={handleAddToCart}
-                >
-                  Thêm vào giỏ hàng
-                </Button>
-                <Button
-                  size={"large"}
-                  color="warning"
-                  variant="contained"
-                  sx={{
-                    borderRadius: 4,
-                  }}
-                  onClick={handlePaymentNow}
-                >
-                  Mua ngay
-                </Button>
-              </Stack>
-              <Divider />
-              <Stack direction={"column"} spacing={1}>
-                <Stack direction={"row"} alignItems={"center"} spacing={1}>
-                  <Iconify
-                    icon={"ph:check-circle"}
-                    sx={{
-                      color: (theme) => theme.palette.success.main,
-                      width: 18,
-                      height: 18,
-                    }}
-                  />
-                  <Typography variant="body2">
-                    Hoàn tiền đổi trả trong 7 ngày
-                  </Typography>
-                </Stack>
-                <Stack direction={"row"} alignItems={"center"} spacing={1}>
-                  <Iconify
-                    icon={"ph:check-circle"}
-                    sx={{
-                      color: (theme) => theme.palette.success.main,
-                      width: 18,
-                      height: 18,
-                    }}
-                  />
-                  <Typography variant="body2">
-                    Miễn phí giao hàng đơn từ 500.000 đ trong 10 km đầu tiên
-                  </Typography>
-                </Stack>
-                <Stack direction={"row"} alignItems={"center"} spacing={1}>
-                  <Iconify
-                    icon={"ph:check-circle"}
-                    sx={{
-                      color: (theme) => theme.palette.success.main,
-                      width: 18,
-                      height: 18,
-                    }}
-                  />
-                  <Typography variant="body2">
-                    Giao hàng thu tiền, thanh toán
-                  </Typography>
-                </Stack>
-              </Stack>
-            </Stack>
-          </Box>
+          <Stack direction={"row"} justifyContent={"space-between"}>
+            <Button
+              size={"large"}
+              variant="contained"
+              sx={{
+                borderRadius: 4,
+              }}
+              onClick={handleAddToCart}
+            >
+              Thêm vào giỏ hàng
+            </Button>
+            <Button
+              size={"large"}
+              color="warning"
+              variant="contained"
+              sx={{
+                borderRadius: 4,
+              }}
+              onClick={handlePaymentNow}
+            >
+              Mua ngay
+            </Button>
+          </Stack>
           <Stack direction={"column"} spacing={1}>
             <Typography variant="body2" fontWeight={600}>
               Bình luận
