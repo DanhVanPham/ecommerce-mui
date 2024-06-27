@@ -15,7 +15,7 @@ const Completed = () => {
   });
   const { data } = responseOrders;
   const state = specifyState(responseOrders);
-
+  console.log({ responseOrders });
   return (
     <StateManager
       state={state}
@@ -24,7 +24,7 @@ const Completed = () => {
       errorState={<ErrorAlert sx={{ backgroundColor: "background.paper" }} />}
     >
       <Stack spacing={1.5}>
-        {data.map((order, idx) => (
+        {data?.map((order, idx) => (
           <GroupOrder key={idx} data={order} />
         ))}
       </Stack>

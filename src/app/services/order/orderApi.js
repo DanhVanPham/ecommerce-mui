@@ -18,7 +18,7 @@ export const orderApi = apiService
       // }),
       getByStatus: builder.query({
         query: (data) => ({
-          url: "/Order/GetAllOrders",
+          url: "/Order/GetByStatus",
           method: "POST",
           data,
         }),
