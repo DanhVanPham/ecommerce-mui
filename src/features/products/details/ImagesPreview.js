@@ -2,7 +2,7 @@ import { Stack, Box } from "@mui/material";
 import { alpha } from "@mui/material";
 
 const ImagesPreview = ({ image }) => {
-  const imageUrl = image ? "data:image/jpeg;base64," + btoa(image) : "";
+  const imageUrl = image ? "data:image/jpeg;base64," + image : "";
 
   return (
     <Stack
@@ -31,9 +31,9 @@ const ImagesPreview = ({ image }) => {
             height: 300,
             borderRadius: 1,
             overflow: "hidden",
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
           <img alt={"product image"} src={imageUrl} />
