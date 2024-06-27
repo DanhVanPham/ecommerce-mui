@@ -1,16 +1,30 @@
 import { Stack } from "@mui/material";
 import React from "react";
 import CompletedOrderItem from "./OrderItem";
+import StateManager, { specifyState } from "../../../components/StateManager";
+import { useGetOrdersQuery } from "../../../app/services/order/orderApi";
+import GroupOrderSkeleton from "../GroupOrderSkeleton";
+import EmptyResult from "../../../components/EmptyResult";
+import ErrorAlert from "../../../components/ErrorAlert";
+import { mockOrderData } from '../_mockData'
+import GroupOrder from '../GroupOrder'
 
 const Completed = () => {
+  const responseOrders = useGetOrdersQuery();
+  const state = specifyState(responseOrders);
+
   return (
-    <Stack spacing={1.5}>
-      {Array(5)
-        .fill(0)
-        .map((_, idx) => (
-          <CompletedOrderItem key={idx} />
+    <StateManager state={state}
+      loadingState={<GroupOrderSkeleton />}
+      emptyState={<EmptyResult sx={{ backgroundColor: 'background.paper' }} />}
+      errorState={<ErrorAlert sx={{ backgroundColor: 'background.paper' }} />}
+    >
+      <Stack spacing={1.5}>
+        {mockOrderData.map((order, idx) => (
+          <GroupOrder key={idx} data={order} />
         ))}
-    </Stack>
+      </Stack>
+    </StateManager>
   );
 };
 

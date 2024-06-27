@@ -17,62 +17,11 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../../../app/redux/cart/cartSlice";
 import { useNavigate } from "react-router-dom";
 import { PATH_APP } from "../../../routes/paths";
+import { mockData } from "./_mockData";
 
 const DetailContainer = ({ data }) => {
   const dispatch = useDispatch();
   const router = useNavigate();
-
-  // Call api
-  const mockData = {
-    brand: "Friso Gold",
-    name: "Sữa bầu Friso Mum Gold hương cam",
-    originName: "Hà Lan",
-    price: "620.000",
-    rating: "4.1",
-    offerDesc:
-      "Hóa đơn từ 500,000đ được mua sản phẩm giá sốc (Không kèm khuyến mãi khác)\n\
-Núm ti, ti ngậm giảm 20% khi mua kèm sữa, tã, bình sữa (không kèm khuyến mãi khác)(click xem chi tiết).\n\
-Tinh dầu thiên nhiên, đồ dùng cho bé giảm 15% khi mua kèm sữa, tã (Không kèm khuyến mãi khác)(click xem chi tiết)\n\
-Mắt kính giảm 50% khi mua kèm hóa đơn sữa, tã bất kỳ (không kèm khuyến mãi khác)(click xem chi tiết).\n\
-Xe tập đi, đồ chơi giảm từ 18% đến 31% khi mua kèm hóa đơn sữa, tã bất kỳ (không kèm khuyến mãi khác)(click xem chi tiết).\n\
-Nhập mã VNPAYAVA2 giảm từ 10,000đ đến 20,000đ (Áp dụng tùy giá trị đơn hàng) khi thanh toán qua VNPAY-QR (Xem chi tiết tại đây)\n\
-Quà khi mua 2 sản phẩm (hết quà hoàn 25.000₫)",
-    desc: "Sữa bầu Friso Mum Gold hương cam là sản phẩm dành cho mẹ mang thai và cho con bú. Sữa với công thức Dualcare+ cho một nền tảng dinh dưỡng vững chắc cho sự phát triển của bé từ khi còn ở trong bụng mẹ. ",
-    nutrients: [
-      {
-        id: 1,
-        name: "400g",
-      },
-      {
-        id: 2,
-        name: "500g",
-      },
-    ],
-    comments: [
-      {
-        id: 1,
-        name: "Nguyễn Hữu Tuấn",
-        createdAt: "10/05/2024",
-        rating: 4,
-        message:
-          "Chất lượng của sản phẩm thì không phải bàn cãi, nhưng cách đóng gói để đưa sản phẩm đến tay khách hàng thật sự không tốt lắm nên tôi trừ 1 sao",
-      },
-      {
-        id: 2,
-        name: "Lê Trần",
-        createdAt: "05/05/2024",
-        rating: 4,
-        message: "Rất tốt, cả sản phẩm và người bán",
-      },
-      {
-        id: 2,
-        name: "Trần Trọng Lê",
-        createdAt: "05/05/2024",
-        rating: 1,
-        message: "Uống chả bổ béo gì",
-      },
-    ],
-  };
 
   const { rating, comments } = mockData || {};
 

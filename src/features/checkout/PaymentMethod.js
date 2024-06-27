@@ -42,7 +42,7 @@ const PaymentMethod = () => {
         <Stack direction='row' spacing={1.5}>
             {methods.map(method => <PaymentItem key={method.value}
                 imgUrl={method.imgUrl}
-            // isSelected
+                isSelected
             />)}
         </Stack>
     )

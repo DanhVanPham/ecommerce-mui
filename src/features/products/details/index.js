@@ -19,12 +19,12 @@ const ProductDetails = () => {
   return (
     <Container maxWidth={"false"}>
       <StateManager
-        state={"success"}
+        state={state}
         loadingState={<LoadingScreen />}
         emptyState={<EmptyResult />}
         errorState={<ErrorAlert />}
       >
-        <DetailContainer />
+        <DetailContainer data={data} />
       </StateManager>
     </Container>
   );
