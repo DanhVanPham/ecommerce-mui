@@ -3,11 +3,11 @@ import React from "react";
 import { fCurrencyVND, fThousandSeparator } from "../../utils/formatNumber";
 
 const OrderItem = ({ data }) => {
-  const { quantity, price, productItem } = data ?? {}
-  const { name, image, milkBrand } = productItem ?? {}
+  const { quantity, price, productItem } = data ?? {};
+  const { name, image, milkBrand } = productItem?.product ?? {};
 
   const imageUrl = image?.content
-    ? "data:image/jpeg;base64," + btoa(image?.content)
+    ? "data:image/jpeg;base64," + image?.content
     : "";
 
   return (
@@ -17,7 +17,7 @@ const OrderItem = ({ data }) => {
       bgcolor="background.paper"
       sx={{
         display: "flex",
-        alignItems: 'center'
+        alignItems: "center",
       }}
     >
       <Box
@@ -25,8 +25,8 @@ const OrderItem = ({ data }) => {
           width: "48px",
           height: "48px",
           border: (theme) => `1px solid ${theme.palette.divider}`,
-          borderRadius: '12px',
-          mr: 2
+          borderRadius: "12px",
+          mr: 2,
         }}
       >
         <img
@@ -65,7 +65,7 @@ const OrderItem = ({ data }) => {
           </Typography>
         </Stack>
       </Box>
-      <Stack alignSelf='flex-start'>
+      <Stack alignSelf="flex-start">
         <Box alignSelf="center" mt={2}>
           <Typography fontSize="14px" fontWeight={500} color="#EB2606">
             {fCurrencyVND(price)}
