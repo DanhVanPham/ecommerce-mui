@@ -11,7 +11,7 @@ import { MENU_TAB } from "..";
 
 const Completed = () => {
   const responseOrders = useGetByStatusQuery({
-    status: MENU_TAB.completed,
+    Status: MENU_TAB.completed,
   });
   const { data } = responseOrders;
   const state = specifyState(responseOrders);
