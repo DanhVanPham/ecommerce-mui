@@ -17,10 +17,14 @@ export const orderApi = apiService
       //     ] : [{ type: ORDER_TAG }]
       // }),
       getByStatus: builder.query({
-        query: (data) => ({
+        query: (body) => ({
           url: "/Order/GetByStatus",
           method: "POST",
-          data,
+          headers: {
+            "Content-Type": "multipart/form-data;",
+          },
+          body,
+          formData: true,
         }),
         transformResponse: (response) => response?.data,
         providesTags: (result, error, arg) =>

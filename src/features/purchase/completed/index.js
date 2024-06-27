@@ -10,9 +10,10 @@ import GroupOrder from "../GroupOrder";
 import { MENU_TAB } from "..";
 
 const Completed = () => {
-  const responseOrders = useGetByStatusQuery({
-    Status: MENU_TAB.completed,
-  });
+  const bodyFormData = new FormData();
+  bodyFormData.append("Status", MENU_TAB.completed);
+
+  const responseOrders = useGetByStatusQuery(bodyFormData);
   const { data } = responseOrders;
   const state = specifyState(responseOrders);
   console.log({ responseOrders });
