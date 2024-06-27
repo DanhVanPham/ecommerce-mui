@@ -22,7 +22,7 @@ const ImagesPreview = ({ image }) => {
           borderRadius: 1,
           background: alpha("#ffffff", 0.8),
         }}
-        justifyContent={"space-between"}
+        justifyContent={"center"}
         alignItems={"center"}
       >
         <Box
@@ -31,6 +31,9 @@ const ImagesPreview = ({ image }) => {
             height: 300,
             borderRadius: 1,
             overflow: "hidden",
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
           }}
         >
           <img alt={"product image"} src={imageUrl} />

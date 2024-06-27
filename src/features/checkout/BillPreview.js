@@ -1,17 +1,7 @@
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import React, { useMemo } from "react";
-import CryptoJS from "crypto-js";
-import querystring from "query-string";
 import PaymentMethod from "./PaymentMethod";
-import moment from "moment";
 import { fCurrencyVND } from "../../utils/formatNumber";
-import {
-  VNPAY_RETURN_URL,
-  VNPAY_SECRET_KEY,
-  VNPAY_TMN_CODE,
-  VNPAY_VPN_URL,
-} from "../../configs/app";
-import { sortObject } from "../../utils/sortHelper";
 import { useSelector } from "react-redux";
 import { FEE_SHIP } from "../../utils/constants";
 
@@ -26,49 +16,6 @@ const BillPreview = () => {
     [cartItems]
   );
 
-  function formatCurrentDateTime() {
-    const date = new Date();
-
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
-    const day = String(date.getDate()).padStart(2, "0");
-    const hours = String(date.getHours()).padStart(2, "0");
-    const minutes = String(date.getMinutes()).padStart(2, "0");
-    const seconds = String(date.getSeconds()).padStart(2, "0");
-
-    return `${year}${month}${day}${hours}${minutes}${seconds}`;
-  }
-
-  const handlePayment = () => {
-    let date = new Date();
-    const orderId = moment(date).format("DDHHmmss");
-
-    const vnpParams = {
-      vnp_Version: "2.1.0",
-      vnp_Command: "pay",
-      vnp_TmnCode: VNPAY_TMN_CODE,
-      vnp_Locale: "vn",
-      vnp_CurrCode: "VND",
-      vnp_TxnRef: orderId,
-      vnp_OrderInfo: `Payment for order ${orderId}`,
-      vnp_OrderType: "other",
-      vnp_Amount: 1000000 * 1000, // Amount in VND
-      vnp_ReturnUrl: VNPAY_RETURN_URL,
-      vnp_IpAddr: "::1",
-      vnp_CreateDate: formatCurrentDateTime(),
-    };
-
-    const sortedParams = sortObject(vnpParams);
-    const signData = querystring.stringify(sortedParams, { encode: false });
-    const hmac = CryptoJS.HmacSHA512(signData, VNPAY_SECRET_KEY);
-    const signed = hmac.toString(CryptoJS.enc.Hex);
-    sortedParams.vnp_SecureHash = signed;
-    const paymentUrl = `${VNPAY_VPN_URL}?${querystring.stringify(sortedParams, {
-      encode: false,
-    })}`;
-
-    window.location.href = paymentUrl;
-  };
 
   return (
     <Box
@@ -111,12 +58,11 @@ const BillPreview = () => {
         </Typography>
         <PaymentMethod />
       </Stack>
-      <Button
+      <Button type="submit"
         size={"large"}
         variant="contained"
         fullWidth
         sx={{ borderRadius: 4 }}
-        onClick={handlePayment}
       >
         <Stack
           direction="row"
