@@ -5,28 +5,29 @@ import OrderItem from "../OrderItem";
 import { MENU_TAB } from "..";
 import { fCurrencyVND } from "../../../utils/formatNumber";
 
-const WaitingShipOrderItem = () => {
+const WaitingShipOrderItem = ({ data }) => {
+  const { totalPriceProduct } = data ?? {}
   return (
     <Stack bgcolor="background.paper">
-      <OrderItem status={MENU_TAB.waitingForShip} />
+      <OrderItem data={data} />
       <Divider />
       <Box
         p={3}
         pb={1.5}
         display="flex"
-        justifyContent="space-between"
+        justifyContent="flex-end"
         alignItems="center"
       >
-        <Button variant="contained" color="error">
+        {/* <Button variant="contained" color="error">
           Hủy đơn
-        </Button>
+        </Button> */}
         <Stack direction="row" spacing={1.25} alignItem="center">
           <Stack direction="row" alignItems="center">
             <AttachMoneyIcon fontSize="small" />
             <Typography fontSize="14px">Thành tiền:</Typography>
           </Stack>
           <Typography fontSize="24px" fontWeight={400} color="#EB2606">
-            {fCurrencyVND(165000)}
+            {fCurrencyVND(totalPriceProduct)}
           </Typography>
         </Stack>
       </Box>

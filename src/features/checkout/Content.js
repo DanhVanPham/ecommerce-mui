@@ -1,4 +1,4 @@
-import { Divider, Grid, Stack } from "@mui/material";
+import { Divider, Grid, Stack, Typography, styled } from "@mui/material";
 import React, { useMemo } from "react";
 import ProductPreview from "./ProductPreview";
 import ShippingInfo from "./ShippingInfo";
@@ -23,8 +23,18 @@ import { FEE_SHIP, MAX_PRICE_TRANSACTION } from "../../utils/constants";
 import { useSelector } from "react-redux";
 import { useSnackbar } from "notistack";
 import { fCurrencyVND } from "../../utils/formatNumber";
+import EmptyContent from "../../components/EmptyContent";
+import { Link } from "react-router-dom";
+import { PATH_APP } from "../../routes/paths";
+import { formatCurrentDateTime } from "./helpers";
 
-
+const LinkStyled = styled(Link)(({ theme }) => ({
+  color: theme.palette.primary.main,
+  textDecoration: 'none',
+  '&:hover': {
+    textDecoration: 'underline'
+  }
+}))
 
 const Content = () => {
   const { enqueueSnackbar } = useSnackbar()
@@ -60,19 +70,6 @@ const Content = () => {
       </Stack>
     );
   };
-
-  function formatCurrentDateTime() {
-    const date = new Date();
-
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
-    const day = String(date.getDate()).padStart(2, "0");
-    const hours = String(date.getHours()).padStart(2, "0");
-    const minutes = String(date.getMinutes()).padStart(2, "0");
-    const seconds = String(date.getSeconds()).padStart(2, "0");
-
-    return `${year}${month}${day}${hours}${minutes}${seconds}`;
-  }
 
   const handlePayment = (orderInfo) => {
     let date = new Date();
@@ -113,25 +110,41 @@ const Content = () => {
     handlePayment(data)
   }
 
+  const isEmptyCart = !cartItems?.length
+
   return (
     <FormProvider methods={methods} onSubmit={methods.handleSubmit(handleSubmit)}>
       <Grid container spacing={5}>
-        <Grid item xs={12} md={7} lg={8}>
-          {isSmDown && renderContent()}
-          {!isSmDown && (
-            <Scrollbar
-              style={{
-                minHeight: `calc(100vh - 260px)`,
-                maxHeight: `calc(100vh - 260px)`,
-              }}
-            >
-              {renderContent()}
-            </Scrollbar>
-          )}
-        </Grid>
-        <Grid item xs={12} md={5} lg={4}>
-          <BillPreview />
-        </Grid>
+        {isEmptyCart && (
+          <Grid item xs={12}>
+            <EmptyContent
+              title={'Giỏ hàng trống'}
+              description={
+                <Typography>Click <LinkStyled to={PATH_APP.products.index}>vào đây</LinkStyled> để mua sắm ngay.</Typography>
+              }
+            />
+          </Grid>
+        )}
+        {!isEmptyCart && (
+          <>
+            <Grid item xs={12} md={7} lg={8}>
+              {isSmDown && renderContent()}
+              {!isSmDown && (
+                <Scrollbar
+                  style={{
+                    minHeight: `calc(100vh - 260px)`,
+                    maxHeight: `calc(100vh - 260px)`,
+                  }}
+                >
+                  {renderContent()}
+                </Scrollbar>
+              )}
+            </Grid>
+            <Grid item xs={12} md={5} lg={4}>
+              <BillPreview />
+            </Grid>
+          </>
+        )}
       </Grid>
     </FormProvider>
   );

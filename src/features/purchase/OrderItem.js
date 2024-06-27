@@ -1,55 +1,15 @@
-import { Box, Chip, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import React from "react";
-import { fCurrencyVND } from "../../utils/formatNumber";
-import { MENU_TAB } from ".";
+import { fCurrencyVND, fThousandSeparator } from "../../utils/formatNumber";
 
-export const StatusFactory = ({ status }) => {
-  switch (status) {
-    case MENU_TAB.completed:
-      return (
-        <Chip
-          variant="outlined"
-          size="small"
-          color="success"
-          label="Hoàn thành"
-        />
-      );
-    case MENU_TAB.canceled:
-      return (
-        <Chip variant="outlined" size="small" color="error" label="Đã hủy" />
-      );
+const OrderItem = ({ data }) => {
+  const { quantity, price, productItem } = data ?? {}
+  const { name, image, milkBrand } = productItem ?? {}
 
-    case MENU_TAB.waitingForPayment:
-      return (
-        <Chip
-          variant="outlined"
-          size="small"
-          color="secondary"
-          label="Chờ thanh toán"
-        />
-      );
+  const imageUrl = image?.content
+    ? "data:image/jpeg;base64," + btoa(image?.content)
+    : "";
 
-    case MENU_TAB.waitingForShip:
-      return (
-        <Chip
-          variant="outlined"
-          size="small"
-          color="warning"
-          label="Chờ giao hàng"
-        />
-      );
-
-    case MENU_TAB.shipping:
-      return (
-        <Chip variant="outlined" size="small" color="info" label="Vận chuyển" />
-      );
-
-    default:
-      break;
-  }
-};
-
-const OrderItem = ({ status }) => {
   return (
     <Box
       p={3}
@@ -57,25 +17,28 @@ const OrderItem = ({ status }) => {
       bgcolor="background.paper"
       sx={{
         display: "flex",
+        alignItems: 'center'
       }}
     >
       <Box
         sx={{
-          width: "80px",
-          height: "80px",
+          width: "48px",
+          height: "48px",
           border: (theme) => `1px solid ${theme.palette.divider}`,
+          borderRadius: '12px',
+          mr: 2
         }}
       >
         <img
           alt="product"
-          src="https://product.hstatic.net/1000282430/product/sua-thanh-trung-khong-duong-950ml_5d7f6fc7714e405194f39d291f6db9a6_grande.jpg"
+          src={imageUrl}
           style={{
             objectFit: "contain",
             objectPosition: "center",
           }}
         />
       </Box>
-      <Box px={1.5} flex={1}>
+      <Box flex={1}>
         <Typography
           fontSize={"1rem"}
           fontWeight={500}
@@ -87,26 +50,25 @@ const OrderItem = ({ status }) => {
             WebkitBoxOrient: "vertical",
           }}
         >
-          Sữa bầu Friso Mum Gold hương cam
+          {name}
         </Typography>
         <Stack>
           <Typography fontSize={14} fontWeight={300} color="#9D9EA2">
-            Sữa bột
+            {milkBrand?.name}
           </Typography>
           <Typography
             fontSize={14}
             fontWeight={300}
             color="rgba(0, 0, 0, 0.87)"
           >
-            x1
+            x{fThousandSeparator(quantity || 0)}
           </Typography>
         </Stack>
       </Box>
-      <Stack>
-        <StatusFactory status={status} />
+      <Stack alignSelf='flex-start'>
         <Box alignSelf="center" mt={2}>
           <Typography fontSize="14px" fontWeight={500} color="#EB2606">
-            {fCurrencyVND(165000)}
+            {fCurrencyVND(price)}
           </Typography>
         </Box>
       </Stack>

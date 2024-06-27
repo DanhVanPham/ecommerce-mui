@@ -7,27 +7,27 @@ import WaitingPayment from "./waitingPayment";
 import WaitingShip from "./waitingShip";
 
 export const MENU_TAB = {
-  waitingForPayment: "waitingForPayment",
-  shipping: "shipping",
-  waitingForShip: "waitingForShip",
-  completed: "completed",
-  canceled: "canceled",
+  // waitingForPayment: "waitingForPayment",
+  waitingForShip: "CREATED",
+  shipping: "SHIPPING",
+  completed: "SUCCESS",
+  // canceled: "canceled",
 };
 
 export const MENU_TABS = [
-  {
-    label: "Chờ thanh toán",
-    value: MENU_TAB.waitingForPayment,
-    component: <WaitingPayment />,
-  },
-  { label: "Vận chuyển", value: MENU_TAB.shipping, component: <Shipping /> },
+  // {
+  //   label: "Chờ thanh toán",
+  //   value: MENU_TAB.waitingForPayment,
+  //   component: <WaitingPayment />,
+  // },
   {
     label: "Chờ giao hàng",
     value: MENU_TAB.waitingForShip,
     component: <WaitingShip />,
   },
+  { label: "Đang vận chuyển", value: MENU_TAB.shipping, component: <Shipping /> },
   { label: "Hoàn thành", value: MENU_TAB.completed, component: <Completed /> },
-  { label: "Đã hủy", value: MENU_TAB.canceled, component: <Canceled /> },
+  // { label: "Đã hủy", value: MENU_TAB.canceled, component: <Canceled /> },
 ];
 
 const PurchaseContainer = () => {
@@ -39,7 +39,7 @@ const PurchaseContainer = () => {
   };
 
   return (
-    <Stack pb={2} bgcolor="#F2F6F4">
+    <Stack pb={2} bgcolor="#F2F6F4" sx={{ minHeight: 'calc(100vh - 66px)' }}>
       <Container maxWidth="lg" sx={{ px: { xs: 1, md: 3 } }}>
         <Stack>
           <Typography fontSize="24px" fontWeight={400} lineHeight="36px" my={3}>

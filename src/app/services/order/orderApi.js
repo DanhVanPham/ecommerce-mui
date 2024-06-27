@@ -11,10 +11,10 @@ export const orderApi = apiService
                     url: '/Order/GetAllOrders',
                 }),
                 transformResponse: response => response?.data,
-                providesTags: (result, error, arg) => [
+                providesTags: (result, error, arg) => result ? [
                     { type: ORDER_TAG },
                     ...result?.map(({ id }) => ({ type: ORDER_TAG, id }))
-                ]
+                ] : [{ type: ORDER_TAG }]
             }),
             getOrderById: builder.query({
                 query: (id) => ({
@@ -31,7 +31,7 @@ export const orderApi = apiService
                 }),
                 invalidatesTags: (result, error, arg) => {
                     if (error) return []
-                    return [ORDER_TAG]
+                    return [{ type: ORDER_TAG }]
                 }
             }),
         }),
