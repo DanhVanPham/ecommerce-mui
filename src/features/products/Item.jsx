@@ -25,7 +25,7 @@ const ProductItem = ({ data }) => {
   };
 
   const imageUrl = image?.content
-    ? "data:image/jpeg;base64," + btoa(image?.content)
+    ? "data:image/jpeg;base64," + image?.content
     : "";
 
   return (
