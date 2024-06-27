@@ -3,7 +3,12 @@ import React from "react";
 import { fCurrencyVND, fThousandSeparator } from "../../utils/formatNumber";
 
 const ProductItem = ({ data }) => {
-  const { imageUrl, name, price, quantity } = data ?? {};
+  const { product, name, price, quantity } = data ?? {};
+  const { image } = product ?? {};
+
+  const imageUrl = image?.content
+    ? "data:image/jpeg;base64," + image.content
+    : "";
   return (
     <Stack>
       <Grid container sx={{ my: 3 }}>

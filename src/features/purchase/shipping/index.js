@@ -1,5 +1,5 @@
 import { Stack } from "@mui/material";
-import React from "react";
+import React, { useMemo } from "react";
 import ShippingOrderItem from "./OrderItem";
 import StateManager, { specifyState } from "../../../components/StateManager";
 import { useGetByStatusQuery } from "../../../app/services/order/orderApi";
@@ -10,11 +10,20 @@ import GroupOrder from "../GroupOrder";
 import { MENU_TAB } from "..";
 
 const Shipping = () => {
-  const responseOrders = useGetByStatusQuery({
-    status: MENU_TAB.shipping,
+  const bodyFormData = new FormData();
+  bodyFormData.append("Status", MENU_TAB.shipping);
+  const responseOrders = useGetByStatusQuery(bodyFormData, {
+    refetchOnMountOrArgChange: true,
   });
   const { data } = responseOrders;
   const state = specifyState(responseOrders);
+
+  const sortedItems = useMemo(() => {
+    if (!data) return [];
+    return structuredClone(data)?.sort(
+      (a, b) => new Date(b.createdDate) - new Date(a.createdDate)
+    );
+  }, [data]);
 
   return (
     <StateManager
@@ -24,7 +33,7 @@ const Shipping = () => {
       errorState={<ErrorAlert sx={{ backgroundColor: "background.paper" }} />}
     >
       <Stack spacing={1.5}>
-        {data.map((order, idx) => (
+        {sortedItems?.map((order, idx) => (
           <GroupOrder key={idx} data={order} />
         ))}
       </Stack>

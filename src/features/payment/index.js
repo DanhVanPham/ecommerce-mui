@@ -1,5 +1,5 @@
 import { Box, CircularProgress, Stack, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CryptoJS from "crypto-js";
 import queryString from "query-string";
 import { PAYMENT_STATUS } from "./constants";
@@ -12,10 +12,16 @@ import { orderApi } from "../../app/services/order/orderApi";
 import { VNPAY_SECRET_KEY } from "../../configs/app";
 import { sortObject } from "../../utils/sortHelper";
 import { clearCart } from "../../app/redux/cart/cartSlice";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 const PaymentContainer = () => {
   const [paymentStatus, setPaymentStatus] = useState(PAYMENT_STATUS.idle);
   const [errorCode, setErrorCode] = useState(null);
+  const [paymentedIds, updatePaymentedIds] = useLocalStorage(
+    "paymentedIds",
+    []
+  );
+  const isCreatedOrder = useRef(false);
   const cartItems = useSelector((state) => state.cart.items);
 
   const handleClearCart = () => dispatch(clearCart());
@@ -72,7 +78,12 @@ const PaymentContainer = () => {
       const hmac = CryptoJS.HmacSHA512(signData, secretKey);
       const signed = hmac.toString(CryptoJS.enc.Hex);
 
+      if (paymentedIds?.includes(secureHash) || isCreatedOrder.current) return;
       // Verify the secure hash
+      updatePaymentedIds(
+        paymentedIds ? [...paymentedIds, secureHash] : [secureHash]
+      );
+      isCreatedOrder.current = true;
       if (secureHash === signed) {
         // Check for VNPAY response codes
         const responseCode = paymentResult["vnp_ResponseCode"];

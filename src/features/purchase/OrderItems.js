@@ -7,8 +7,8 @@ import EmptyResult from "../../components/EmptyResult";
 import ErrorAlert from "../../components/ErrorAlert";
 import OrderSkeleton from "./OrderSkeleton";
 
-const OrderItems = ({ id }) => {
-  const responseOrderItems = useGetOrderByIdQuery(id, { skip: !id });
+const OrderItems = ({ id, isOpen }) => {
+  const responseOrderItems = useGetOrderByIdQuery(id, { skip: !id || !isOpen });
   const { data } = responseOrderItems;
   const state = specifyState(responseOrderItems);
 
@@ -26,8 +26,8 @@ const OrderItems = ({ id }) => {
         errorState={<ErrorAlert />}
       >
         <Stack divider={<Divider />}>
-          {data.orderDetails?.map((orderItem) => (
-            <OrderItem data={orderItem} />
+          {data?.orderDetails?.map((orderItem) => (
+            <OrderItem key={orderItem?.id} data={orderItem} />
           ))}
         </Stack>
       </StateManager>

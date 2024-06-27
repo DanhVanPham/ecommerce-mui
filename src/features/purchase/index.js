@@ -25,21 +25,24 @@ export const MENU_TABS = [
     value: MENU_TAB.waitingForShip,
     component: <WaitingShip />,
   },
-  { label: "Đang vận chuyển", value: MENU_TAB.shipping, component: <Shipping /> },
+  {
+    label: "Đang vận chuyển",
+    value: MENU_TAB.shipping,
+    component: <Shipping />,
+  },
   { label: "Hoàn thành", value: MENU_TAB.completed, component: <Completed /> },
   // { label: "Đã hủy", value: MENU_TAB.canceled, component: <Canceled /> },
 ];
 
 const PurchaseContainer = () => {
-  const [value, setValue] = React.useState(MENU_TAB.completed);
+  const [value, setValue] = React.useState(MENU_TAB.waitingForShip);
 
   const handleChange = (event, newValue) => {
-    console.log(newValue);
     setValue(newValue);
   };
 
   return (
-    <Stack pb={2} bgcolor="#F2F6F4" sx={{ minHeight: 'calc(100vh - 66px)' }}>
+    <Stack pb={2} bgcolor="#F2F6F4" sx={{ minHeight: "calc(100vh - 66px)" }}>
       <Container maxWidth="lg" sx={{ px: { xs: 1, md: 3 } }}>
         <Stack>
           <Typography fontSize="24px" fontWeight={400} lineHeight="36px" my={3}>
@@ -58,7 +61,7 @@ const PurchaseContainer = () => {
               ))}
             </Tabs>
           </Box>
-          <Box my={1.5}>
+          <Box my={1.5} key={value}>
             {MENU_TABS.find((tab) => tab.value === value).component}
           </Box>
         </Stack>

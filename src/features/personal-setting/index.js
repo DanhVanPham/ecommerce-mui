@@ -31,7 +31,7 @@ const getTabs = () => [
 export default function PersonalSettingContainer() {
   const tabs = useMemo(() => getTabs(), []);
   const { currentTab, onChangeTab } = useTabs(tabs[0].value);
-  console.log(currentTab);
+
   return (
     <>
       <Tabs sx={{ marginBottom: 3 }} value={currentTab} onChange={onChangeTab}>

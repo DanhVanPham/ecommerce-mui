@@ -1,5 +1,5 @@
 import { Stack } from "@mui/material";
-import React from "react";
+import React, { useMemo } from "react";
 import CompletedOrderItem from "./OrderItem";
 import StateManager, { specifyState } from "../../../components/StateManager";
 import { useGetByStatusQuery } from "../../../app/services/order/orderApi";
@@ -13,10 +13,19 @@ const Completed = () => {
   const bodyFormData = new FormData();
   bodyFormData.append("Status", MENU_TAB.completed);
 
-  const responseOrders = useGetByStatusQuery(bodyFormData);
+  const responseOrders = useGetByStatusQuery(bodyFormData, {
+    refetchOnMountOrArgChange: true,
+  });
   const { data } = responseOrders;
   const state = specifyState(responseOrders);
-  console.log({ responseOrders });
+
+  const sortedItems = useMemo(() => {
+    if (!data) return [];
+    return structuredClone(data)?.sort(
+      (a, b) => new Date(b.createdDate) - new Date(a.createdDate)
+    );
+  }, [data]);
+
   return (
     <StateManager
       state={state}
@@ -25,7 +34,7 @@ const Completed = () => {
       errorState={<ErrorAlert sx={{ backgroundColor: "background.paper" }} />}
     >
       <Stack spacing={1.5}>
-        {data?.map((order, idx) => (
+        {sortedItems?.map((order, idx) => (
           <GroupOrder key={idx} data={order} />
         ))}
       </Stack>
