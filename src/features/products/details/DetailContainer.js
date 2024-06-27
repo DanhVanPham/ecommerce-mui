@@ -147,7 +147,7 @@ const DetailContainer = ({ data }) => {
               />
             </Stack>
           </Stack>
-          <Stack direction={"row"} justifyContent={"space-between"}>
+          <Stack direction={"row"} justifyContent={"space-between"} py={1}>
             <Button
               size={"large"}
               variant="contained"
