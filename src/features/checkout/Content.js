@@ -19,10 +19,15 @@ import {
   VNPAY_VPN_URL,
 } from "../../configs/app";
 import { sortObject } from "../../utils/sortHelper";
-import { FEE_SHIP } from "../../utils/constants";
+import { FEE_SHIP, MAX_PRICE_TRANSACTION } from "../../utils/constants";
 import { useSelector } from "react-redux";
+import { useSnackbar } from "notistack";
+import { fCurrencyVND } from "../../utils/formatNumber";
+
+
 
 const Content = () => {
+  const { enqueueSnackbar } = useSnackbar()
   const isSmDown = useResponsive("down", "md");
   const cartItems = useSelector((state) => state.cart.items);
 
@@ -82,7 +87,7 @@ const Content = () => {
       vnp_TxnRef: orderId,
       vnp_OrderInfo: JSON.stringify(orderInfo),
       vnp_OrderType: "other",
-      vnp_Amount: total + FEE_SHIP, // Amount in VND
+      vnp_Amount: (total + FEE_SHIP) * 100, // Amount in VND
       vnp_ReturnUrl: VNPAY_RETURN_URL,
       vnp_IpAddr: "::1",
       vnp_CreateDate: formatCurrentDateTime(),
@@ -101,6 +106,10 @@ const Content = () => {
   };
 
   const handleSubmit = (data) => {
+    if (total > MAX_PRICE_TRANSACTION) return enqueueSnackbar(
+      `Bạn không thể giao dịch với hóa đơn trên ${fCurrencyVND(MAX_PRICE_TRANSACTION)}`, {
+      variant: 'error'
+    })
     handlePayment(data)
   }
 

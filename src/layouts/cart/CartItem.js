@@ -2,7 +2,7 @@ import { Box, Button, IconButton, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import ClearIcon from "@mui/icons-material/Clear";
-import { fCurrencyVND } from "../../utils/formatNumber";
+import { fCurrencyVND, fThousandSeparator } from "../../utils/formatNumber";
 import { useDispatch } from "react-redux";
 import {
   removeFromCart,
@@ -59,7 +59,7 @@ const CartItem = ({ data }) => {
           <AddIcon fontSize="small" />
         </Button>
         <Typography fontSize="14px" my="3px">
-          {quantity}
+          {fThousandSeparator(quantity)}
         </Typography>
         <Button
           size="small"
