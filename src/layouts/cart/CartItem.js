@@ -10,7 +10,8 @@ import {
 } from "../../app/redux/cart/cartSlice";
 
 const CartItem = ({ data }) => {
-  const { id, name, imageUrl, quantity, price } = data ?? {};
+  const { id, product, quantity, price } = data ?? {};
+  const { name, image } = product ?? {};
 
   const dispatch = useDispatch();
 
@@ -25,6 +26,10 @@ const CartItem = ({ data }) => {
   const handleRemoveItem = () => {
     dispatch(removeFromCart(id));
   };
+
+  const imageUrl = image?.content
+    ? "data:image/jpeg;base64," + image?.content
+    : "";
 
   return (
     <Box
