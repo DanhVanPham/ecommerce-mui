@@ -21,14 +21,14 @@ const PaymentContainer = () => {
   const handleClearCart = () => dispatch(clearCart());
 
   const handleCreateOrder = async (data) => {
-    const productItemIds =
+    const productItems =
       cartItems?.map((cartItem) => ({
         id: cartItem?.id,
         quantity: cartItem?.quantity,
       })) ?? [];
     try {
       const parsedData = {
-        productItemIds: productItemIds,
+        productItems: productItems,
         shipFees: FEE_SHIP,
         address: data?.address,
         phoneNumber: data?.phoneNumber,
