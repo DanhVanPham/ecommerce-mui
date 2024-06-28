@@ -1,7 +1,6 @@
 import { Grid, Stack, Typography } from "@mui/material";
 import React, { useMemo } from "react";
 import ProductItem from "./Item";
-import mockProducts from "./_mockData";
 import { useFilterProductsQuery } from "../../app/services/product-item/productItemApi";
 import StateManager, { specifyState } from "../../components/StateManager";
 import ProductSkeleton from "./ProductSkeleton";

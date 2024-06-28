@@ -10,7 +10,8 @@ const AgeFilter = () => {
 	const [value, setValue] = useState([0, 0]);
 
 	const { values, setParam } = useFilterParams();
-	const { defaultValues } = values ?? {};
+	const { [FILTER_CONDITION.rangeAge]: rangeAge, defaultValues } =
+		values ?? {};
 	const defaultData = defaultValues?.[FILTER_CONDITION.rangeAge];
 
 	console.log(values);
@@ -21,11 +22,13 @@ const AgeFilter = () => {
 	const handleSubmit = () => {
 		console.log(value);
 		setParam(FILTER_CONDITION.rangeAge, value);
+		handleClose();
 	};
 
 	const handleReset = () => {
 		setParam(FILTER_CONDITION.rangeAge, defaultData);
 		setValue(defaultData);
+		handleClose();
 	};
 
 	const handleClick = (event) => {
@@ -38,7 +41,8 @@ const AgeFilter = () => {
 
 	const open = Boolean(anchorEl);
 	const isHasData =
-		defaultData?.[0] !== value?.[0] || defaultData?.[1] !== value?.[1];
+		defaultData?.[0] !== rangeAge?.[0] ||
+		defaultData?.[1] !== rangeAge?.[1];
 
 	return (
 		<>

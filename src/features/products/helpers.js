@@ -1,15 +1,14 @@
 export const transformParams = (data) => {
     const { name, page, limit, rangePrice, rangeAge, milkBrandIds } =
         data ?? {};
-    console.log(rangeAge, rangeAge?.[1])
     const formData = new FormData();
     formData.append("PageNumber", page);
     formData.append("PageSize", limit);
 
     if (name) formData.append("Name", name);
     if (rangeAge?.[1]) {
-        formData.append("StartAge", 321);
-        formData.append("EndAge", 3213);
+        formData.append("StartAge", rangeAge?.[0]);
+        formData.append("EndAge", rangeAge?.[1]);
     }
     if (rangePrice?.[1]) {
         formData.append("StartPrice", rangePrice?.[0]);

@@ -10,7 +10,8 @@ const PriceFilter = () => {
 	const [value, setValue] = useState([0, 0]);
 
 	const { values, setParam } = useFilterParams();
-	const { defaultValues } = values ?? {};
+	const { [FILTER_CONDITION.rangeAge]: rangeAge, defaultValues } =
+		values ?? {};
 	const defaultData = defaultValues?.[FILTER_CONDITION.rangeAge];
 
 	const handleChange = (event, newValue) => {
@@ -18,12 +19,14 @@ const PriceFilter = () => {
 	};
 
 	const handleReset = () => {
-		setParam(FILTER_CONDITION.rangeAge, [0, 0]);
-		setValue([0, 0]);
+		setParam(FILTER_CONDITION.rangeAge, defaultData);
+		setValue(defaultData);
+		handleClose();
 	};
 
 	const handleSubmit = () => {
 		setParam(FILTER_CONDITION.rangePrice, value);
+		handleClose();
 	};
 
 	const handleClick = (event) => {
@@ -36,7 +39,7 @@ const PriceFilter = () => {
 
 	const open = Boolean(anchorEl);
 	const isHasData =
-		defaultData?.[0] !== value?.[0] || defaultData?.[1] !== value?.[1];
+		rangeAge?.[0] !== value?.[0] || rangeAge?.[1] !== value?.[1];
 
 	return (
 		<>
@@ -74,12 +77,16 @@ const PriceFilter = () => {
 						LỌC THEO GIÁ
 					</Typography>
 					<Box sx={{ my: 2.5, width: "272px" }}>
-						<IOSSlider
-							getAriaLabel={() => "Price range"}
-							value={value}
-							onChange={handleChange}
-							valueLabelDisplay="on"
+						<Slider
+							aria-label="Price range"
+							defaultValue={30}
 							getAriaValueText={(value) => `${value} vnđ`}
+							valueLabelDisplay="on"
+							shiftStep={30}
+							step={10}
+							marks
+							min={10}
+							max={110}
 						/>
 					</Box>
 					<Stack
@@ -98,17 +105,19 @@ const PriceFilter = () => {
 						>
 							Áp dụng
 						</Button>
-						<Button
-							variant="outlined"
-							color="error"
-							size="small"
-							sx={{
-								borderRadius: 100,
-							}}
-							onClick={handleReset}
-						>
-							Đặt lại
-						</Button>
+						{isHasData && (
+							<Button
+								variant="outlined"
+								color="error"
+								size="small"
+								sx={{
+									borderRadius: 100,
+								}}
+								onClick={handleReset}
+							>
+								Đặt lại
+							</Button>
+						)}
 					</Stack>
 				</Box>
 			</Popover>
