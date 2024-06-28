@@ -42,3 +42,21 @@ export const menuUnAuthAccount = [
     url: PATH_AUTH.register,
   },
 ];
+
+export const FILTER_CONDITION = {
+  page: 'page',
+  limit: 'limit',
+  name: 'name',
+  rangePrice: 'rangePrice',
+  rangeAge: 'rangeAge',
+  milkBrandIds: 'milkBrandIds'
+}
+
+export const DEFAULT_PARAMS = {
+  page: 0,
+  limit: 20,
+  name: '',
+  rangePrice: [0, 0],
+  rangeAge: [0, 0],
+  milkBrandIds: []
+}

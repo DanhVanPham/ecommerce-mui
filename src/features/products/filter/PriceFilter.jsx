@@ -5,7 +5,7 @@ import { IOSSlider } from "./SliderCustom";
 import useFilterParams from "../../../components/filters/useFilterParams";
 import { FILTER_CONDITION } from "../../../layouts/constants";
 
-const AgeFilter = () => {
+const PriceFilter = () => {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [value, setValue] = useState([0, 0]);
 
@@ -13,19 +13,17 @@ const AgeFilter = () => {
 	const { defaultValues } = values ?? {};
 	const defaultData = defaultValues?.[FILTER_CONDITION.rangeAge];
 
-	console.log(values);
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
 
-	const handleSubmit = () => {
-		console.log(value);
-		setParam(FILTER_CONDITION.rangeAge, value);
+	const handleReset = () => {
+		setParam(FILTER_CONDITION.rangeAge, [0, 0]);
+		setValue([0, 0]);
 	};
 
-	const handleReset = () => {
-		setParam(FILTER_CONDITION.rangeAge, defaultData);
-		setValue(defaultData);
+	const handleSubmit = () => {
+		setParam(FILTER_CONDITION.rangePrice, value);
 	};
 
 	const handleClick = (event) => {
@@ -60,7 +58,7 @@ const AgeFilter = () => {
 				}
 				onClick={handleClick}
 			>
-				Độ tuổi
+				Khoảng giá
 			</Button>
 			<Popover
 				open={open}
@@ -73,18 +71,22 @@ const AgeFilter = () => {
 			>
 				<Box sx={{ p: 3 }}>
 					<Typography fontSize="12px" fontWeight={300}>
-						LỌC THEO TUỔI
+						LỌC THEO GIÁ
 					</Typography>
 					<Box sx={{ my: 2.5, width: "272px" }}>
 						<IOSSlider
-							getAriaLabel={() => "Age range"}
+							getAriaLabel={() => "Price range"}
 							value={value}
 							onChange={handleChange}
 							valueLabelDisplay="on"
-							getAriaValueText={(value) => `${value} tuổi`}
+							getAriaValueText={(value) => `${value} vnđ`}
 						/>
 					</Box>
-					<Stack direction={{ xs: "column", sm: "row" }} spacing={1}>
+					<Stack
+						flex={1}
+						direction={{ xs: "column", sm: "row" }}
+						spacing={1}
+					>
 						<Button
 							variant="contained"
 							color="primary"
@@ -96,19 +98,17 @@ const AgeFilter = () => {
 						>
 							Áp dụng
 						</Button>
-						{isHasData && (
-							<Button
-								variant="outlined"
-								color="error"
-								size="small"
-								sx={{
-									borderRadius: 100,
-								}}
-								onClick={handleReset}
-							>
-								Đặt lại
-							</Button>
-						)}
+						<Button
+							variant="outlined"
+							color="error"
+							size="small"
+							sx={{
+								borderRadius: 100,
+							}}
+							onClick={handleReset}
+						>
+							Đặt lại
+						</Button>
 					</Stack>
 				</Box>
 			</Popover>
@@ -116,4 +116,4 @@ const AgeFilter = () => {
 	);
 };
 
-export default AgeFilter;
+export default PriceFilter;

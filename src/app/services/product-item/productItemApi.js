@@ -3,10 +3,10 @@ import apiService from "../apiService";
 export const productItemApi = apiService.injectEndpoints({
   endpoints: (builder) => ({
     filterProducts: builder.query({
-      query: (params) => ({
-        url: "/ProductItem/GetAll",
-        method: "GET",
-        params,
+      query: (formData) => ({
+        url: "/ProductItem/GetProductItems",
+        method: "POST",
+        data: formData,
       }),
       transformResponse: (response) => response?.data,
     }),

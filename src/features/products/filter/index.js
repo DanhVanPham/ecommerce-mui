@@ -2,6 +2,7 @@ import { Stack } from "@mui/material";
 import React from "react";
 import BrandFilter from "./BrandFilter";
 import AgeFilter from "./AgeFilter";
+import PriceFilter from "./PriceFilter";
 
 const ProductFilter = () => {
   return (
@@ -17,6 +18,7 @@ const ProductFilter = () => {
       <Stack direction="row" flexWrap="wrap" spacing={3.75}>
         <BrandFilter />
         <AgeFilter />
+        <PriceFilter />
       </Stack>
     </Stack>
   );

@@ -11,7 +11,12 @@ import {
 	styled,
 } from "@mui/material";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
-import { mockDataBrands } from "./_mockData";
+import useFilterParams from "../../../components/filters/useFilterParams";
+import { FILTER_CONDITION } from "../../../layouts/constants";
+import { useGetAllMilkBrandQuery } from "../../../app/services/milk-brand/milkBrandApi";
+import StateManager, { specifyState } from "../../../components/StateManager";
+import BrandSkeleton from "./BrandSkeleton";
+import ErrorAlert from "../../../components/ErrorAlert";
 
 const CheckboxStyled = styled(Box)(({ theme, sx, checked }) => ({
 	padding: theme.spacing(0.5),
@@ -30,6 +35,21 @@ const CheckboxStyled = styled(Box)(({ theme, sx, checked }) => ({
 
 const BrandFilter = () => {
 	const [anchorEl, setAnchorEl] = React.useState(null);
+	const { values, setParam } = useFilterParams();
+	const { [FILTER_CONDITION.milkBrandIds]: milkBrandIds = [] } = values ?? {};
+
+	const responseMilkBrand = useGetAllMilkBrandQuery();
+	const { data } = responseMilkBrand;
+	const state = specifyState(responseMilkBrand);
+
+	const handleChange = (event, id) => {
+		let cloneData = structuredClone(milkBrandIds);
+		const selectedIdx = cloneData?.indexOf(id);
+
+		if (selectedIdx !== -1) cloneData?.splice(selectedIdx, 1);
+		else cloneData = [...(cloneData || []), id];
+		setParam(FILTER_CONDITION.milkBrandIds, cloneData);
+	};
 
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
@@ -90,28 +110,46 @@ const BrandFilter = () => {
 								flexWrap: "wrap",
 							}}
 						>
-							{mockDataBrands.map((brand) => (
-								<FormControlLabel
-									key={brand.id}
-									control={
-										<Checkbox
-											checked
-											// onChange={handleChange}
-											name={brand.name}
-											sx={{ display: "none" }}
+							<StateManager
+								state={state}
+								loadingState={<BrandSkeleton />}
+								errorState={<ErrorAlert />}
+							>
+								{data?.map((brand) => {
+									const isSelected = milkBrandIds?.includes(
+										brand.id
+									);
+									return (
+										<FormControlLabel
+											key={brand.id}
+											control={
+												<Checkbox
+													checked={isSelected}
+													name={brand.name}
+													onChange={(e) =>
+														handleChange(
+															e,
+															brand.id
+														)
+													}
+													sx={{ display: "none" }}
+												/>
+											}
+											label={
+												<CheckboxStyled
+													checked={isSelected}
+												>
+													{brand.name}
+												</CheckboxStyled>
+											}
+											sx={{
+												display: "inline-block",
+												m: 0,
+											}}
 										/>
-									}
-									label={
-										<CheckboxStyled checked>
-											{brand.name}
-										</CheckboxStyled>
-									}
-									sx={{
-										display: "inline-block",
-										m: 0,
-									}}
-								/>
-							))}
+									);
+								})}
+							</StateManager>
 						</FormGroup>
 					</FormControl>
 				</Box>

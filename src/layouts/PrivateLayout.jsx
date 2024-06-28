@@ -9,46 +9,61 @@ import CartButton from "./cart/CartButton";
 import { PATH_APP } from "../routes/paths";
 import AccountButton from "./AccountButton";
 import Logo from "./Logo";
+import FilterContextProvider from "../components/filters/FilterContextProvider";
+import { FILTER_PRODUCT_ID } from "../utils/constants";
+import { DEFAULT_PARAMS } from "./constants";
+import useFilter from "../components/filters/useFilter";
 
 export default function PrivateLayout() {
-  return (
-    <Box sx={{ display: "flex", flex: 1 }}>
-      <AppBar
-        component="nav"
-        sx={{
-          background: (theme) => theme.palette.common.white,
-          color: (theme) => theme.palette.primary.main,
-          boxShadow: "none",
-        }}
-      >
-        <Toolbar
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "stretch",
-            pt: 2,
-          }}
-        >
-          <Stack
-            direction="row"
-            sx={{
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <Logo />
-            <SearchBar />
-            <Stack direction="row" spacing={0.5} alignContent="center">
-              <AccountButton />
-              <CartButton />
-            </Stack>
-          </Stack>
-        </Toolbar>
-      </AppBar>
-      <Box component="main" sx={{ flex: 1 }}>
-        <Toolbar />
-        <Outlet />
-      </Box>
-    </Box>
-  );
+	const { uiId } = useFilter({
+		fixedKey: FILTER_PRODUCT_ID,
+		defaultValues: DEFAULT_PARAMS,
+	});
+
+	return (
+		<FilterContextProvider uiId={uiId}>
+			<Box sx={{ display: "flex", flex: 1 }}>
+				<AppBar
+					component="nav"
+					sx={{
+						background: (theme) => theme.palette.common.white,
+						color: (theme) => theme.palette.primary.main,
+						boxShadow: "none",
+					}}
+				>
+					<Toolbar
+						sx={{
+							display: "flex",
+							flexDirection: "column",
+							alignItems: "stretch",
+							pt: 2,
+						}}
+					>
+						<Stack
+							direction="row"
+							sx={{
+								alignItems: "center",
+								justifyContent: "space-between",
+							}}
+						>
+							<Logo />
+							<SearchBar />
+							<Stack
+								direction="row"
+								spacing={0.5}
+								alignContent="center"
+							>
+								<AccountButton />
+								<CartButton />
+							</Stack>
+						</Stack>
+					</Toolbar>
+				</AppBar>
+				<Box component="main" sx={{ flex: 1 }}>
+					<Toolbar />
+					<Outlet />
+				</Box>
+			</Box>
+		</FilterContextProvider>
+	);
 }

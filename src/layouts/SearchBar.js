@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { IconButton, Stack, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import useFilterParams from "../components/filters/useFilterParams";
+import { FILTER_CONDITION } from "./constants";
 
 const SearchBar = () => {
+  const [keyword, setKeyword] = useState('');
+
+  const { setParam } = useFilterParams()
+
+  const handleSubmit = () => {
+    setParam(FILTER_CONDITION.name, keyword)
+  }
+
+  const handleChangeKeyword = (e) => {
+    setKeyword(e.target.value);
+  }
   return (
     <Stack
       direction="row"
@@ -17,6 +30,8 @@ const SearchBar = () => {
         size="small"
         fullWidth
         placeholder="Tìm kiếm"
+        value={keyword}
+        onChange={handleChangeKeyword}
         InputProps={{ sx: { borderRadius: 10 } }}
       />
       <IconButton
@@ -29,6 +44,7 @@ const SearchBar = () => {
             opacity: 0.8,
           },
         }}
+        onClick={handleSubmit}
       >
         <SearchIcon />
       </IconButton>
