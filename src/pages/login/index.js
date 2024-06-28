@@ -47,7 +47,7 @@ export default function Login() {
           <ContentStyle>
             <Stack direction="row" alignItems="center" sx={{ mb: 5 }}>
               <Box sx={{ flexGrow: 1 }}>
-                <Typography variant="h4" gutterBotto>
+                <Typography variant="h4" gutterBottom>
                   Đăng nhập vào hệ thống
                 </Typography>
                 <Typography sx={{ color: "text.secondary" }}>

@@ -31,7 +31,7 @@ export function RegisterForm({ onSubmit, methods }) {
           label="Tên của bạn"
           input={
             <DescTextField
-              name="name"
+              name="firstName"
               size="small"
               placeholder="Ví dụ: Trinh"
               descHelpText="＊Dùng để hiển thị trên hệ thống"
@@ -40,13 +40,12 @@ export function RegisterForm({ onSubmit, methods }) {
           isRequired
         />
         <FormInputLabel
-          label="Tên tài khoản"
+          label="Họ của bạn"
           input={
             <DescTextField
-              name="username"
+              name="lastName"
               size="small"
-              placeholder="Ví dụ: trinh-doan"
-              descHelpText="＊Chỉ có thể bao gồm các chữ cái, số, dấu gạch nối và dấu gạch dưới."
+              placeholder="Ví dụ: Nguyễn"
             />
           }
           isRequired
@@ -63,9 +62,20 @@ export function RegisterForm({ onSubmit, methods }) {
           isRequired
         />
         <FormInputLabel
+          label="Địa chỉ"
+          input={
+            <RHFTextField
+              name="address"
+              size="small"
+              placeholder="Ví dụ: Bình Trị Đông A, Bình Tân, HCM"
+            />
+          }
+          isRequired
+        />
+        {/* <FormInputLabel
           label="Số điện thoại"
           input={<RHFPhoneNumber name="phone" size="small" />}
-        />
+        /> */}
         <FormInputLabel
           label="Mật khẩu"
           input={

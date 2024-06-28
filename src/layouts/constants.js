@@ -44,19 +44,21 @@ export const menuUnAuthAccount = [
 ];
 
 export const FILTER_CONDITION = {
-  page: 'page',
-  limit: 'limit',
-  name: 'name',
-  rangePrice: 'rangePrice',
-  rangeAge: 'rangeAge',
-  milkBrandIds: 'milkBrandIds'
-}
+  page: "page",
+  limit: "limit",
+  name: "name",
+  startPrice: "startPrice",
+  endPrice: "endPrice",
+  rangeAge: "rangeAge",
+  milkBrandIds: "milkBrandIds",
+};
 
 export const DEFAULT_PARAMS = {
   page: 0,
   limit: 20,
-  name: '',
-  rangePrice: [0, 0],
+  name: "",
+  startPrice: null,
+  endPrice: null,
   rangeAge: [0, 0],
-  milkBrandIds: []
-}
+  milkBrandIds: [],
+};

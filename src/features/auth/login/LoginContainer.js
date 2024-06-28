@@ -7,10 +7,13 @@ import { useSnackbar } from "notistack";
 // others
 import { LoginForm } from "./LoginForm";
 import { useDispatch } from "../../../app/store";
+import { loginSchema } from "../../../utils/validations/auth/loginSchema";
+import { authApi } from "../../../app/services/auth/authApi";
+import { transformParams } from "./helper";
 
 // ----------------------------------------------------------------------
 const defaultValues = {
-  username: "",
+  email: "",
   password: "",
   remember: true,
 };
@@ -20,17 +23,16 @@ export default function LoginContainer() {
   const dispatch = useDispatch();
 
   const methods = useForm({
-    // resolver: yupResolver(schema),
+    resolver: yupResolver(loginSchema()),
     defaultValues,
     mode: "onSubmit",
   });
 
-  const { setError } = methods;
-
   // handle logic
   const onSubmit = async (data) => {
     try {
-      // await dispatch(authApi.endpoints.login.initiate(data)).unwrap();
+      const formData = transformParams(data);
+      await dispatch(authApi.endpoints.login.initiate(formData)).unwrap();
       enqueueSnackbar("Đăng nhập thành công");
     } catch (error) {
       showLoginError(error);

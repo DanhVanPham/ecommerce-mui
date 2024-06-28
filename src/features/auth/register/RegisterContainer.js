@@ -10,13 +10,16 @@ import { PATH_AUTH } from "../../../routes/paths";
 import { dispatch } from "../../../app/store";
 import { authApi } from "../../../app/services/auth/authApi";
 import { RegisterForm } from "./RegisterForm";
+import registerSchema from "../../../utils/validations/auth/registerSchema";
+import { transformParams } from "./helper";
 
 // ----------------------------------------------------------------------
 const defaultValues = {
-  name: "",
-  username: "",
-  phone: "",
+  firstName: "",
+  lastName: "",
+  // phone: "",
   email: "",
+  address: "",
   password: "",
   passwordConfirmation: "",
 };
@@ -28,7 +31,7 @@ export default function RegisterContainer() {
 
   // method for validation
   const methods = useForm({
-    // resolver: yupResolver(RegisterSchema(t)),
+    resolver: yupResolver(registerSchema()),
     defaultValues,
     mode: "onSubmit",
   });
@@ -36,8 +39,9 @@ export default function RegisterContainer() {
   // handle register
   async function register(data) {
     // send req to server and handle error
+    const formData = transformParams(data);
     try {
-      await dispatch(authApi.endpoints.register.initiate(data), {
+      await dispatch(authApi.endpoints.register.initiate(formData), {
         track: false,
       }).unwrap();
       enqueueSnackbar("Đăng ký thành công");

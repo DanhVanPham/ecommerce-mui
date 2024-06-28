@@ -29,7 +29,7 @@ export function LoginForm({ onSubmit, methods }) {
           <Alert severity="error">{errors.afterSubmit.message}</Alert>
         )}
 
-        <RHFTextField name="username" isManualShrink label={"Tên tài khoản"} />
+        <RHFTextField name="email" isManualShrink label={"Email"} />
 
         <RHFTextField
           name="password"
