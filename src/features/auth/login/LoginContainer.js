@@ -41,7 +41,7 @@ export default function LoginContainer() {
 
   // get message of error
   const showLoginError = (error) => {
-    enqueueSnackbar(error?.errorMessage || "Đăng nhập thất bại!", {
+    enqueueSnackbar(error?.data?.errorMessage || "Đăng nhập thất bại!", {
       variant: "error",
     });
   };
