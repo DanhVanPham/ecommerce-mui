@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, Popover, Slider, Stack, Typography } from "@mui/material";
+import {
+  Badge,
+  Box,
+  Button,
+  Popover,
+  Slider,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 import { IOSSlider } from "./SliderCustom";
 import useFilterParams from "../../../components/filters/useFilterParams";
@@ -48,13 +56,18 @@ const AgeFilter = () => {
   return (
     <>
       <Button
-        variant="text"
+        variant={isHasData ? "contained" : "text"}
         size="small"
         sx={{
           borderRadius: 10,
           fontSize: "1rem",
           fontWeight: 400,
           color: "#46494F",
+          ...(isHasData && {
+            color: "white",
+            bgcolor: (theme) => theme.palette.primary.light,
+            border: (theme) => `1px solid ${theme.palette.primary.dark}`,
+          }),
         }}
         endIcon={
           open ? (

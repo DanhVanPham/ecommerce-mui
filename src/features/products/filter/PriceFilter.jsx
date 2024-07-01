@@ -82,13 +82,18 @@ const PriceFilter = () => {
   return (
     <>
       <Button
-        variant="text"
+        variant={isHasData ? "contained" : "text"}
         size="small"
         sx={{
           borderRadius: 10,
           fontSize: "1rem",
           fontWeight: 400,
           color: "#46494F",
+          ...(isHasData && {
+            color: "white",
+            bgcolor: (theme) => theme.palette.primary.light,
+            border: (theme) => `1px solid ${theme.palette.primary.dark}`,
+          }),
         }}
         endIcon={
           open ? (

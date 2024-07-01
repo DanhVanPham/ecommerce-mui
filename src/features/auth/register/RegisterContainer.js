@@ -48,7 +48,9 @@ export default function RegisterContainer() {
       navigate(PATH_AUTH.login);
     } catch (error) {
       console.log(error);
-      enqueueSnackbar("Đăng ký thất bại!", { variant: "error" });
+      enqueueSnackbar(error?.errorMessage || "Đăng ký thất bại!", {
+        variant: "error",
+      });
     }
   }
   // handle submision
