@@ -54,8 +54,8 @@ export const FILTER_CONDITION = {
 };
 
 export const DEFAULT_PARAMS = {
-  page: 0,
-  limit: 20,
+  page: 1,
+  limit: 50,
   name: "",
   startPrice: null,
   endPrice: null,
