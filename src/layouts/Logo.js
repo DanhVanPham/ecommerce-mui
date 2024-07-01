@@ -18,7 +18,7 @@ const Logo = ({ sx, ...props }) => {
         ...sx,
       }}
       {...props}
-      onClick={() => router(PATH_APP.root)}
+      onClick={() => router(PATH_APP.products.index)}
     >
       <Box
         sx={{
