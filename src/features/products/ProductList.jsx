@@ -36,7 +36,7 @@ const ProductList = () => {
       </Typography>
       <Grid container spacing={2}>
         <StateManager
-          state={"empty"}
+          state={state}
           loadingState={<ProductSkeleton />}
           errorState={
             <Grid item xs={12}>
