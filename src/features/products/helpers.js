@@ -12,7 +12,7 @@ export const transformParams = (data) => {
   }
   if (startPrice) formData.append("StartPrice", startPrice);
   if (endPrice) formData.append("EndPrice", endPrice);
-  if (milkBrandIds?.lenght > 0) formData.append("MilkBrandIds", milkBrandIds);
+  if (milkBrandIds?.length > 0) formData.append("MilkBrandIds", milkBrandIds);
 
   return formData;
 };
