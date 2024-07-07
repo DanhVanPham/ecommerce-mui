@@ -1,11 +1,22 @@
-import { IconButton, Menu, MenuItem } from "@mui/material";
+import { Menu, MenuItem, alpha } from "@mui/material";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import { useState } from "react";
-import { MENU_ITEM, menuAuthAccount } from "./constants";
+import { useMemo, useState } from "react";
+import { MENU_ITEM, menuAuthAccount, menuUnAuthAccount } from "./constants";
 import { useNavigate } from "react-router-dom";
 import { PATH_AUTH } from "../routes/paths";
+import { dispatch } from "../app/store";
+import {
+  selectCurrentUser,
+  selectIsAuthendicated,
+  signOut,
+} from "../app/redux/auth/authSlice";
+import { enqueueSnackbar } from "notistack";
+import { useSelector } from "react-redux";
+import { IconButtonStyled } from "./cart/common";
 
 const AccountButton = () => {
+  const isAuthenticated = useSelector(selectIsAuthendicated);
+  const currUser = useSelector(selectCurrentUser);
   const router = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -18,7 +29,13 @@ const AccountButton = () => {
     setAnchorEl(null);
   };
 
-  const handleClickItem = (item) => {
+  const handleSignOut = async () => {
+    await dispatch(signOut());
+    enqueueSnackbar("Đăng xuất thành công", { variant: "success" });
+    router(PATH_AUTH.login);
+  };
+
+  const handleClickItem = async (item) => {
     const { value, url } = item ?? {};
 
     switch (value) {
@@ -30,7 +47,7 @@ const AccountButton = () => {
         break;
       case MENU_ITEM.logout:
         // Handle logout
-        router(PATH_AUTH.login);
+        handleSignOut();
         break;
       default:
         break;
@@ -38,11 +55,31 @@ const AccountButton = () => {
     handleClose();
   };
 
+  const menuItems = useMemo(
+    () => (isAuthenticated ? menuAuthAccount : menuUnAuthAccount),
+    [isAuthenticated]
+  );
+
+  const firstWordName = currUser?.firstName?.[0] || "";
+
   return (
     <>
-      <IconButton onClick={handleClick}>
-        <PersonOutlineIcon />
-      </IconButton>
+      <IconButtonStyled
+        size="small"
+        disableRipple
+        onClick={handleClick}
+        sx={{
+          ...(firstWordName && {
+            bgcolor: (theme) => alpha(theme.palette.grey[500], 0.24),
+            color: (theme) => theme.palette.grey[600],
+            lineHeight: 1,
+            p: 0,
+            fontSize: "1.25rem",
+          }),
+        }}
+      >
+        {!!firstWordName ? firstWordName : <PersonOutlineIcon />}
+      </IconButtonStyled>
       <Menu
         anchorEl={anchorEl}
         id="account-menu"
@@ -78,7 +115,7 @@ const AccountButton = () => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        {menuAuthAccount.map((menuItem) => (
+        {menuItems.map((menuItem) => (
           <MenuItem key={menuItem.id} onClick={() => handleClickItem(menuItem)}>
             {menuItem.label}
           </MenuItem>

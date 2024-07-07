@@ -27,17 +27,19 @@ import EmptyContent from "../../components/EmptyContent";
 import { Link } from "react-router-dom";
 import { PATH_APP } from "../../routes/paths";
 import { formatCurrentDateTime } from "./helpers";
+import { selectCurrentUser } from "../../app/redux/auth/authSlice";
 
 const LinkStyled = styled(Link)(({ theme }) => ({
   color: theme.palette.primary.main,
-  textDecoration: 'none',
-  '&:hover': {
-    textDecoration: 'underline'
-  }
-}))
+  textDecoration: "none",
+  "&:hover": {
+    textDecoration: "underline",
+  },
+}));
 
 const Content = () => {
-  const { enqueueSnackbar } = useSnackbar()
+  const { enqueueSnackbar } = useSnackbar();
+  const currUser = useSelector(selectCurrentUser);
   const isSmDown = useResponsive("down", "md");
   const cartItems = useSelector((state) => state.cart.items);
 
@@ -51,15 +53,16 @@ const Content = () => {
 
   const methods = useForm({
     defaultValues: {
-      firstName: '',
-      lastName: '',
-      phoneNumber: '',
-      email: '',
-      address: '',
+      userId: currUser?.id,
+      firstName: currUser?.firstName || "",
+      lastName: currUser?.lastName || "",
+      phoneNumber: currUser?.phoneNumber || "",
+      email: currUser?.email || "",
+      address: currUser?.address || "",
     },
     resolver: yupResolver(createOrderSchema()),
-    mode: 'onSubmit'
-  })
+    mode: "onSubmit",
+  });
 
   const renderContent = () => {
     return (
@@ -103,24 +106,36 @@ const Content = () => {
   };
 
   const handleSubmit = (data) => {
-    if (total > MAX_PRICE_TRANSACTION) return enqueueSnackbar(
-      `Bạn không thể giao dịch với hóa đơn trên ${fCurrencyVND(MAX_PRICE_TRANSACTION)}`, {
-      variant: 'error'
-    })
-    handlePayment(data)
-  }
+    if (total > MAX_PRICE_TRANSACTION)
+      return enqueueSnackbar(
+        `Bạn không thể giao dịch với hóa đơn trên ${fCurrencyVND(
+          MAX_PRICE_TRANSACTION
+        )}`,
+        {
+          variant: "error",
+        }
+      );
+    handlePayment(data);
+  };
 
-  const isEmptyCart = !cartItems?.length
+  const isEmptyCart = !cartItems?.length;
 
   return (
-    <FormProvider methods={methods} onSubmit={methods.handleSubmit(handleSubmit)}>
+    <FormProvider
+      methods={methods}
+      onSubmit={methods.handleSubmit(handleSubmit)}
+    >
       <Grid container spacing={5}>
         {isEmptyCart && (
           <Grid item xs={12}>
             <EmptyContent
-              title={'Giỏ hàng trống'}
+              title={"Giỏ hàng trống"}
               description={
-                <Typography>Click <LinkStyled to={PATH_APP.products.index}>vào đây</LinkStyled> để mua sắm ngay.</Typography>
+                <Typography>
+                  Click{" "}
+                  <LinkStyled to={PATH_APP.products.index}>vào đây</LinkStyled>{" "}
+                  để mua sắm ngay.
+                </Typography>
               }
             />
           </Grid>

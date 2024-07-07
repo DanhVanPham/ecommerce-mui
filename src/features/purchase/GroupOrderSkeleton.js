@@ -12,7 +12,7 @@ import Iconify from "../../components/Iconify";
 const GroupOrderSkeleton = () => {
   return (
     <Stack spacing={1.5}>
-      {Array(5)
+      {Array(2)
         .fill(0)
         .map((_, idx) => (
           <Box key={idx} bgcolor="background.paper" p={3}>
@@ -33,23 +33,20 @@ const GroupOrderSkeleton = () => {
                     spacing={0.5}
                     sx={{ fontSize: "14px" }}
                   >
-                    <Typography>#</Typography>
-                    <Skeleton variant="text" width={80} />
+                    <Skeleton variant="text" width={85} />
                   </Stack>
                   <Box mt={0.25}>
                     <Stack
                       direction={{ xs: "column", sm: "row" }}
                       spacing={{ xs: 0, sm: 1 }}
                     >
-                      <Typography variant="subtitle2">Ngày tạo: </Typography>
-                      <Skeleton variant="text" width={100} />
+                      <Skeleton variant="text" width={120} />
                     </Stack>
                     <Stack
                       direction={{ xs: "column", sm: "row" }}
                       spacing={{ xs: 0, sm: 1 }}
                     >
-                      <Typography variant="subtitle2">Địa chỉ: </Typography>
-                      <Skeleton variant="text" width={250} />
+                      <Skeleton variant="text" width={260} />
                     </Stack>
                   </Box>
                 </Stack>

@@ -1,72 +1,67 @@
-import { useEffect, useMemo } from 'react';
-import { isEqual } from 'lodash';
+import { useEffect, useMemo } from "react";
+import { isEqual } from "lodash";
 // form
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 //
 // import useAuth from "../../../hooks/useAuth";
-import UpdateAccountForm from './UpdateAccountForm';
-import { useAlertReponse } from '../custom/useAlertResponse';
+import UpdateAccountForm from "./UpdateAccountForm";
+import { useAlertReponse } from "../custom/useAlertResponse";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../../app/redux/auth/authSlice";
+import { dispatch } from "../../../app/store";
+import { authApi } from "../../../app/services/auth/authApi";
+import updateProfileSchema from "../../../utils/validations/personal-setting/updateProfileSchema";
 
 // ----------------------------------------------------------------------
 
 export default function AccountGeneral() {
   const { alertUpdateResponse } = useAlertReponse();
   // const { auth: { user } } = useAuth();
-  const user = {}
+  const user = useSelector(selectCurrentUser);
 
   const defaultValues = {
-    avatar: user?.avatar || '',
-    username: user?.username || '',
-    name: user?.name || '',
-    email: user?.email || '',
-    phone: user?.phone || '',
-    department: user?.department || '',
-    signature: user?.signature || '',
-    aboutMe: user?.aboutMe || '',
-    file: null,
+    avatar: user?.avatar || "",
+    firstName: user?.firstName || "",
+    lastName: user?.lastName || "",
+    email: user?.email || "",
+    phone: user?.phoneNumber || "",
+    address: user?.address || "",
   };
 
   const methods = useForm({
-    // resolver: yupResolver(schema),
+    resolver: yupResolver(updateProfileSchema()),
     defaultValues,
-    mode: 'onSubmit'
+    mode: "onSubmit",
   });
   const { reset } = methods;
 
   useEffect(() => {
-    if (user) reset(defaultValues)
-  }, [user])
-
-  async function updateAvatar(data) {
-    if (!data.file) return;
-    // create formdata and send request
-    const formData = new FormData()
-    formData.append('avatar', data.file)
-    try {
-      // await dispatch(userApi.endpoints.updateAvatar.initiate(formData)).unwrap();
-      alertUpdateResponse(true)
-    } catch (error) {
-      console.error(error);
-      alertUpdateResponse(false)
-    }
-  }
+    if (user) reset(defaultValues);
+  }, [user]);
 
   async function updateProfile(data) {
     try {
-      // await dispatch(userApi.endpoints.updateProfile.initiate(data)).unwrap();
-      alertUpdateResponse(true)
+      const formData = new FormData();
+      formData.append("Email", data?.email);
+      formData.append("FirstName", data?.firstName);
+      formData.append("LastName", data?.lastName);
+      formData.append("PhoneNumber", data?.phoneNumber);
+      formData.append("Address", data?.address);
+
+      await dispatch(
+        authApi.endpoints.updateProfile.initiate(formData)
+      ).unwrap();
+      alertUpdateResponse(true);
     } catch (error) {
       console.log(error);
-      alertUpdateResponse(false)
+      alertUpdateResponse(false);
     }
   }
 
   const handleSubmit = async (data) => {
-    updateAvatar(data);
     updateProfile(data);
   };
 
-  return <UpdateAccountForm
-    methods={methods} onSubmit={handleSubmit} />
+  return <UpdateAccountForm methods={methods} onSubmit={handleSubmit} />;
 }

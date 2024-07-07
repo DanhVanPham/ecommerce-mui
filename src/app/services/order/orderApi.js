@@ -49,6 +49,17 @@ export const orderApi = apiService
           return [{ type: ORDER_TAG }];
         },
       }),
+      cancelOrder: builder.mutation({
+        query: (data) => ({
+          url: "/Order/cancelorder",
+          method: "POST",
+          data,
+        }),
+        invalidatesTags: (result, error, arg) => {
+          if (error) return [];
+          return [{ type: ORDER_TAG }];
+        },
+      }),
     }),
   });
 

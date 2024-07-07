@@ -3,23 +3,18 @@ import React from "react";
 import Completed from "./completed";
 import Canceled from "./canceled";
 import Shipping from "./shipping";
-import WaitingPayment from "./waitingPayment";
 import WaitingShip from "./waitingShip";
 
 export const MENU_TAB = {
-  // waitingForPayment: "waitingForPayment",
   waitingForShip: "CREATED",
   shipping: "SHIPPING",
   completed: "SUCCESS",
-  // canceled: "canceled",
+  canceled: "CANCEL",
+  waitRefunded: "WAIT REFUNDED",
+  refunded: "REFUNDED",
 };
 
 export const MENU_TABS = [
-  // {
-  //   label: "Chờ thanh toán",
-  //   value: MENU_TAB.waitingForPayment,
-  //   component: <WaitingPayment />,
-  // },
   {
     label: "Chờ giao hàng",
     value: MENU_TAB.waitingForShip,
@@ -31,7 +26,7 @@ export const MENU_TABS = [
     component: <Shipping />,
   },
   { label: "Hoàn thành", value: MENU_TAB.completed, component: <Completed /> },
-  // { label: "Đã hủy", value: MENU_TAB.canceled, component: <Canceled /> },
+  { label: "Đã hủy", value: MENU_TAB.canceled, component: <Canceled /> },
 ];
 
 const PurchaseContainer = () => {

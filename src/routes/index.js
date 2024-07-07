@@ -3,7 +3,8 @@ import { Loadable } from "./Loadable";
 import { lazy } from "react";
 import LogoOnlyLayout from "../layouts/LogoOnlyLayout";
 import GuestGuard from "../guards/GuestGuard";
-import PrivateLayout from "../layouts/PrivateLayout";
+import MainLayout from "../layouts/MainLayout";
+import AuthGuard from "../guards/AuthGuard";
 
 export default function Router() {
   return useRoutes([
@@ -26,7 +27,26 @@ export default function Router() {
     },
     {
       path: "/",
-      element: <PrivateLayout />,
+      element: (
+        <AuthGuard>
+          <MainLayout />
+        </AuthGuard>
+      ),
+      children: [
+        {
+          path: "users",
+          children: [
+            { path: "profile", element: <PersonalSettingPage /> },
+            { path: "purchase", element: <PurchasePage /> },
+          ],
+        },
+        { path: "checkout", element: <CheckoutPage /> },
+        { path: "payment-return", element: <PaymentReturnPage /> },
+      ],
+    },
+    {
+      path: "/",
+      element: <MainLayout />,
       children: [
         { index: true, element: <Navigate to="products" /> },
         {
@@ -45,16 +65,16 @@ export default function Router() {
         },
         { path: "checkout", element: <CheckoutPage /> },
         { path: "payment-return", element: <PaymentReturnPage /> },
-        {
-          path: "*",
-          element: <LogoOnlyLayout />,
-          children: [
-            { path: "403", element: <Page403 /> },
-            { path: "404", element: <Page404 /> },
-            { path: "500", element: <Page500 /> },
-            { path: "*", element: <Navigate to="/404" replace /> },
-          ],
-        },
+      ],
+    },
+    {
+      path: "*",
+      element: <LogoOnlyLayout />,
+      children: [
+        { path: "403", element: <Page403 /> },
+        { path: "404", element: <Page404 /> },
+        { path: "500", element: <Page500 /> },
+        { path: "*", element: <Navigate to="/404" replace /> },
       ],
     },
   ]);

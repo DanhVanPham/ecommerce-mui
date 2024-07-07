@@ -1,14 +1,28 @@
-import { Stack } from "@mui/material";
-import React, { useMemo } from "react";
-import { useGetByStatusQuery } from "../../../app/services/order/orderApi";
+import { Button, Stack, Typography } from "@mui/material";
+import React, { useMemo, useState } from "react";
+import {
+  orderApi,
+  useGetByStatusQuery,
+} from "../../../app/services/order/orderApi";
 import StateManager, { specifyState } from "../../../components/StateManager";
 import GroupOrderSkeleton from "../GroupOrderSkeleton";
 import EmptyResult from "../../../components/EmptyResult";
 import ErrorAlert from "../../../components/ErrorAlert";
 import GroupOrder from "../GroupOrder";
 import { MENU_TAB } from "..";
+import useToggle from "../../../hooks/useToggle";
+import ConfirmDialog from "../../../components/ConfirmDialog";
+import { dispatch } from "../../../app/store";
+import { enqueueSnackbar } from "notistack";
 
 const WaitingShip = () => {
+  const {
+    toggle: isConfirm,
+    onOpen: onOpenConfirm,
+    onClose: onCloseConfirm,
+  } = useToggle();
+  const [cancelData, setCancelData] = useState(null);
+
   const bodyFormData = new FormData();
   bodyFormData.append("Status", MENU_TAB.waitingForShip);
   const responseOrders = useGetByStatusQuery(bodyFormData, {
@@ -24,19 +38,90 @@ const WaitingShip = () => {
     );
   }, [data]);
 
+  const handleCancel = async () => {
+    try {
+      const id = cancelData?.id;
+      if (!id) return;
+
+      const formData = new FormData();
+      formData.append("Id", id);
+      await dispatch(
+        orderApi.endpoints.cancelOrder.initiate(formData)
+      ).unwrap();
+      enqueueSnackbar("Hủy đơn hàng thành công", { variant: "success" });
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar("Hủy đơn hàng thất bại!", { variant: "error" });
+    } finally {
+      handleCloseConfirm();
+    }
+
+    setCancelData(null);
+  };
+
+  const handleConfirmCancel = (data) => {
+    onOpenConfirm();
+    setCancelData(data);
+  };
+
+  const handleCloseConfirm = () => {
+    onCloseConfirm();
+    setCancelData(null);
+  };
+
   return (
-    <StateManager
-      state={state}
-      loadingState={<GroupOrderSkeleton />}
-      emptyState={<EmptyResult sx={{ backgroundColor: "background.paper" }} />}
-      errorState={<ErrorAlert sx={{ backgroundColor: "background.paper" }} />}
-    >
-      <Stack spacing={1.5}>
-        {sortedItems?.map((order, idx) => (
-          <GroupOrder key={idx} data={order} />
-        ))}
-      </Stack>
-    </StateManager>
+    <>
+      <StateManager
+        state={state}
+        loadingState={<GroupOrderSkeleton />}
+        emptyState={
+          <EmptyResult sx={{ backgroundColor: "background.paper" }} />
+        }
+        errorState={<ErrorAlert sx={{ backgroundColor: "background.paper" }} />}
+      >
+        <Stack spacing={1.5}>
+          {sortedItems?.map((order, idx) => (
+            <GroupOrder key={idx} data={order} onCancel={handleConfirmCancel} />
+          ))}
+        </Stack>
+      </StateManager>
+      <ConfirmDialog
+        open={isConfirm}
+        onCancel={onCloseConfirm}
+        title="Xác nhận"
+        description={
+          <Typography variant="body1" px={3}>
+            Bạn có chắc chắn muốn hủy đơn hàng này không?
+          </Typography>
+        }
+        titleProps={{
+          sx: {
+            p: 2,
+            px: 3,
+          },
+        }}
+        actions={
+          <Stack direction="row" mt={2} spacing={1}>
+            <Button
+              variant="text"
+              size="small"
+              color="inherit"
+              onClick={handleCloseConfirm}
+            >
+              Hủy
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              color="error"
+              onClick={handleCancel}
+            >
+              Xác nhận
+            </Button>
+          </Stack>
+        }
+      />
+    </>
   );
 };
 

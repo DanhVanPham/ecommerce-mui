@@ -1,29 +1,41 @@
 import { Stack, Divider } from "@mui/material";
 import { RHFTextField } from "../../../components/hook-form";
 import { RHFPhoneNumber } from "../../../components/hook-form/custom";
-import { DESCRIPTION_SPACING, DescriptionText } from "../styles";
+import {
+  DESCRIPTION_SPACING,
+  DescriptionText,
+  FORM_MAX_WIDTH,
+} from "../styles";
 
 // ----------------------------------------------------------------------
 
 export default function GeneralForm() {
   return (
-    <Stack spacing={2.5}>
+    <Stack spacing={2.5} sx={{ maxWidth: { xs: 1, md: "70%" } }}>
       <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
         <RHFTextField
-          name="username"
+          name="firstName"
           size="small"
-          placeholder={"Ví dụ: thuy-thu"}
-          label={"Tên tài khoản"}
+          placeholder={"Ví dụ: Trinh"}
+          label={"Tên"}
+          required
         />
         <RHFTextField
-          name="name"
+          name="lastName"
           size="small"
-          placeholder={"Ví dụ: Thuy"}
-          label={"Tên người dùng"}
+          placeholder={"Ví dụ: Doan"}
+          label={"Họ"}
+          required
         />
       </Stack>
       <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
-        <RHFPhoneNumber name="phone" size="small" label={"Số điện thoại"} />
+        <RHFTextField
+          name="phone"
+          size="small"
+          placeholder={"Ví dụ: 0904256789"}
+          label={"Số điện thoại"}
+          required
+        />
         <RHFTextField
           name="email"
           size="small"
@@ -31,17 +43,13 @@ export default function GeneralForm() {
           label={"Địa chỉ email"}
         />
       </Stack>
-      <Stack spacing={DESCRIPTION_SPACING}>
-        <DescriptionText disabled>Viết điều gì đó về bạn</DescriptionText>
-        <RHFTextField
-          name="aboutMe"
-          size="small"
-          multiline
-          rows={4}
-          label={"Về tôi"}
-        />
-      </Stack>
-      <Divider sx={{ borderStyle: "dashed", pt: 2 }} />
+      <RHFTextField
+        name="address"
+        size="small"
+        required
+        placeholder="Ví dụ: Bình Trị Đông A, Bình Tân, HCM"
+        label={"Địa chỉ"}
+      />
     </Stack>
   );
 }

@@ -41,6 +41,7 @@ const PaymentContainer = () => {
         firstName: data?.firstName,
         lastName: data?.lastName,
         email: data?.email,
+        userId: data?.userId,
       };
       await dispatch(
         orderApi.endpoints.createOrder.initiate(parsedData)
