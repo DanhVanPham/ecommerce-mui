@@ -17,6 +17,7 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 const PaymentContainer = () => {
   const [paymentStatus, setPaymentStatus] = useState(PAYMENT_STATUS.idle);
   const [errorCode, setErrorCode] = useState(null);
+  const [errorMsg, setErrorMsg] = useState('');
   const [paymentedIds, updatePaymentedIds] = useLocalStorage(
     "paymentedIds",
     []
@@ -79,7 +80,11 @@ const PaymentContainer = () => {
       const hmac = CryptoJS.HmacSHA512(signData, secretKey);
       const signed = hmac.toString(CryptoJS.enc.Hex);
 
-      if (paymentedIds?.includes(secureHash) || isCreatedOrder.current) return;
+      if (paymentedIds?.includes(secureHash) || isCreatedOrder.current) {
+        setPaymentStatus(PAYMENT_STATUS.failed);
+        setErrorMsg('Đơn hàng đã được thanh toán!')
+        return
+      };
       // Verify the secure hash
       updatePaymentedIds(
         paymentedIds ? [...paymentedIds, secureHash] : [secureHash]
@@ -103,6 +108,7 @@ const PaymentContainer = () => {
       }
     };
     execPayment();
+    return () => isCreatedOrder.current = false;
   }, []);
 
   const renderContent = () => {
@@ -127,7 +133,7 @@ const PaymentContainer = () => {
         return (
           <ErrorCard
             title="Thanh toán thất bại"
-            description={`Thanh toán không thành công với mã lỗi: ${errorCode}! Vui lòng thử lại sau.`}
+            description={errorMsg || `Thanh toán không thành công với mã lỗi: ${errorCode}! Vui lòng thử lại sau.`}
           />
         );
       default:
