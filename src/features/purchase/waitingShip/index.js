@@ -9,11 +9,11 @@ import GroupOrderSkeleton from "../GroupOrderSkeleton";
 import EmptyResult from "../../../components/EmptyResult";
 import ErrorAlert from "../../../components/ErrorAlert";
 import GroupOrder from "../GroupOrder";
-import { MENU_TAB } from "..";
 import useToggle from "../../../hooks/useToggle";
 import ConfirmDialog from "../../../components/ConfirmDialog";
 import { dispatch } from "../../../app/store";
 import { enqueueSnackbar } from "notistack";
+import { STATUS_ORDER } from "../../../utils/constants";
 
 const WaitingShip = () => {
   const {
@@ -24,7 +24,7 @@ const WaitingShip = () => {
   const [cancelData, setCancelData] = useState(null);
 
   const bodyFormData = new FormData();
-  bodyFormData.append("Status", MENU_TAB.waitingForShip);
+  bodyFormData.append("Status", STATUS_ORDER.processing);
   const responseOrders = useGetByStatusQuery(bodyFormData, {
     refetchOnMountOrArgChange: true,
   });

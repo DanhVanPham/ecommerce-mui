@@ -6,7 +6,7 @@ import { PAYMENT_STATUS } from "./constants";
 import CompleteCard from "./CompleteCard";
 import ErrorCard from "./ErrorCard";
 import { useSelector } from "react-redux";
-import { FEE_SHIP } from "../../utils/constants";
+import { FEE_SHIP, STATUS_ORDER, STATUS_PAYMENT } from "../../utils/constants";
 import { dispatch } from "../../app/store";
 import { orderApi } from "../../app/services/order/orderApi";
 import { VNPAY_SECRET_KEY } from "../../configs/app";
@@ -27,6 +27,16 @@ const PaymentContainer = () => {
 
   const handleClearCart = () => dispatch(clearCart());
 
+  const handlePaymentOrder = async (id) => {
+    const formData = new FormData();
+    formData.append('Id', id);
+    formData.append('Status', STATUS_ORDER.processing);
+    formData.append('StatusPayment', STATUS_PAYMENT.paid);
+    await dispatch(
+      orderApi.endpoints.updateStatusOrder.initiate(formData)
+    ).unwrap();
+  }
+
   const handleCreateOrder = async (data) => {
     const productItems =
       cartItems?.map((cartItem) => ({
@@ -44,9 +54,12 @@ const PaymentContainer = () => {
         email: data?.email,
         userId: data?.userId,
       };
-      await dispatch(
+      const response = await dispatch(
         orderApi.endpoints.createOrder.initiate(parsedData)
       ).unwrap();
+      console.log(response)
+      const orderId = response?.order?.id
+      if (orderId) handlePaymentOrder(orderId)
       return true;
     } catch (error) {
       console.log(error);

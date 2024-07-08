@@ -26,9 +26,9 @@ export const orderApi = apiService
         providesTags: (result, error, arg) =>
           result
             ? [
-                { type: ORDER_TAG },
-                ...result?.map(({ id }) => ({ type: ORDER_TAG, id })),
-              ]
+              { type: ORDER_TAG },
+              ...result?.map(({ id }) => ({ type: ORDER_TAG, id })),
+            ]
             : [{ type: ORDER_TAG }],
       }),
       getOrderById: builder.query({
@@ -41,6 +41,17 @@ export const orderApi = apiService
       createOrder: builder.mutation({
         query: (data) => ({
           url: "/Order/CreateOrder",
+          method: "POST",
+          data,
+        }),
+        invalidatesTags: (result, error, arg) => {
+          if (error) return [];
+          return [{ type: ORDER_TAG }];
+        },
+      }),
+      updateStatusOrder: builder.mutation({
+        query: (data) => ({
+          url: "/Order/updatestatus",
           method: "POST",
           data,
         }),

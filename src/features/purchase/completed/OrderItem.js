@@ -2,13 +2,13 @@ import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import React from "react";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import OrderItem from "../OrderItem";
-import { MENU_TAB } from "..";
 import { fCurrencyVND } from "../../../utils/formatNumber";
+import { STATUS_ORDER } from "../../../utils/constants";
 
 const CompletedOrderItem = () => {
   return (
     <Stack bgcolor="background.paper">
-      <OrderItem status={MENU_TAB.completed} />
+      <OrderItem status={STATUS_ORDER.completed} />
       <Divider />
       <Box
         p={3}

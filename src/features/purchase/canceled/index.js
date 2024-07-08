@@ -1,16 +1,16 @@
 import { Stack } from "@mui/material";
 import React, { useMemo } from "react";
-import { MENU_TAB } from "..";
 import { useGetByStatusQuery } from "../../../app/services/order/orderApi";
 import StateManager, { specifyState } from "../../../components/StateManager";
 import GroupOrderSkeleton from "../GroupOrderSkeleton";
 import EmptyResult from "../../../components/EmptyResult";
 import ErrorAlert from "../../../components/ErrorAlert";
 import GroupOrder from "../GroupOrder";
+import { STATUS_ORDER } from "../../../utils/constants";
 
 const Canceled = () => {
   const bodyFormData = new FormData();
-  bodyFormData.append("Status", MENU_TAB.canceled);
+  bodyFormData.append("Status", STATUS_ORDER.canceled);
 
   const responseOrders = useGetByStatusQuery(bodyFormData, {
     refetchOnMountOrArgChange: true,

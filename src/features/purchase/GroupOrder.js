@@ -7,32 +7,30 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
-import { StatusFactory } from "./helper";
-import { GroupBox } from "../../components/group-box/GroupBox";
+import { StatusFactory, StatusPaymentFactory } from "./helper";
 import { fCurrencyVND } from "../../utils/formatNumber";
 import { formatDate } from "../../utils/datetime/formatHelper";
 import { FormatType } from "../../utils/constants/datetime/formatType";
 import Iconify from "../../components/Iconify";
 import useToggle from "../../hooks/useToggle";
-import { MENU_TAB } from ".";
 import OrderItems from "./OrderItems";
+import { STATUS_ORDER } from "../../utils/constants";
 
 const GroupOrder = ({ data, onCancel }) => {
-  const { id, status, totalPriceProduct, createdDate, address } = data ?? {};
+  const { id, status, statusPayment, totalPriceProduct, createdDate, address } = data ?? {};
 
   const { toggle, onToggle } = useToggle(false);
 
   const hiddenId = `${id?.slice(0, 2)}xxx${id?.slice(-2)}`;
 
-  const isWaitingForShip = status === MENU_TAB.waitingForShip;
+  const isProcessing = status === STATUS_ORDER.processing;
 
   return (
     <Box bgcolor="background.paper" p={3}>
       <Stack
         spacing={1}
         sx={{
-          ...(isWaitingForShip && {
+          ...(isProcessing && {
             mb: 1,
           }),
         }}
@@ -58,15 +56,20 @@ const GroupOrder = ({ data, onCancel }) => {
               />
             </IconButton>
             <Stack>
-              <Typography
-                fontSize="14px"
-                sx={{
-                  textDecoration: "underline",
-                  cursor: "pointer",
-                }}
+              <Stack direction='row' spacing={1}
+                alignItems='center'
               >
-                #{hiddenId}
-              </Typography>
+                <Typography
+                  fontSize="14px"
+                  sx={{
+                    textDecoration: "underline",
+                    cursor: "pointer",
+                  }}
+                >
+                  #{hiddenId}
+                </Typography>
+                <StatusPaymentFactory status={statusPayment} />
+              </Stack>
               <Box mt={0.25}>
                 <Stack
                   direction={{ xs: "column", sm: "row" }}
@@ -99,7 +102,7 @@ const GroupOrder = ({ data, onCancel }) => {
             </Box>
           </Stack>
         </Stack>
-        {isWaitingForShip && (
+        {isProcessing && (
           <>
             <Divider sx={{ borderStyle: "dashed" }} />
             <Button

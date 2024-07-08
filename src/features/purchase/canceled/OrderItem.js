@@ -2,13 +2,13 @@ import { Box, Divider, Stack, Typography } from "@mui/material";
 import React from "react";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import OrderItem from "../OrderItem";
-import { MENU_TAB } from "..";
 import { fCurrencyVND } from "../../../utils/formatNumber";
+import { STATUS_ORDER } from "../../../utils/constants";
 
 const CanceledOrderItem = () => {
   return (
     <Stack bgcolor="background.paper">
-      <OrderItem status={MENU_TAB.canceled} />
+      <OrderItem status={STATUS_ORDER.canceled} />
       <Divider />
       <Box
         p={3}
