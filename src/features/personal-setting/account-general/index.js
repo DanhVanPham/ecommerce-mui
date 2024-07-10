@@ -44,7 +44,7 @@ export default function AccountGeneral() {
       formData.append("Email", data?.email);
       formData.append("FirstName", data?.firstName);
       formData.append("LastName", data?.lastName);
-      formData.append("PhoneNumber", data?.phoneNumber);
+      formData.append("PhoneNumber", data?.phone);
       formData.append("Address", data?.address);
 
       await dispatch(

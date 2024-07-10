@@ -17,7 +17,7 @@ const ProductDetails = () => {
   const state = specifyState(responseProductDetails);
 
   return (
-    <Container maxWidth={"false"}>
+    <Container maxWidth={"false"} sx={{ py: 4 }}>
       <StateManager
         state={state}
         loadingState={<LoadingScreen />}

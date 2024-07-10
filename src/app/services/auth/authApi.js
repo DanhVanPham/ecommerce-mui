@@ -15,17 +15,15 @@ export const authApi = apiService.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           const token = data?.token ?? "";
-          console.log(data);
           const decoded = jwtDecode(token);
-          console.log(decoded);
           dispatch(setToken(token));
           dispatch(
             setUser({
               id: decoded?.sub,
               firstName: decoded?.FirstName,
               lastName: decoded?.LastName,
-              address: decoded?.address,
-              phoneNumber: decoded?.phoneNumber,
+              address: decoded?.Address,
+              phoneNumber: decoded?.PhoneNumber,
               email: decoded?.email,
             })
           );
@@ -59,11 +57,13 @@ export const authApi = apiService.injectEndpoints({
       }),
       async onQueryStarted(formData, { dispatch, queryFulfilled }) {
         try {
-          const { data } = await queryFulfilled;
-          console.log(data);
-          const { token, firstName, lastName, address, phoneNumber, email } =
-            data ?? {};
-          dispatch(setToken(token));
+          await queryFulfilled;
+          const email = formData.get("Email");
+          const firstName = formData.get("FirstName");
+          const lastName = formData.get("LastName");
+          const phoneNumber = formData.get("PhoneNumber");
+          const address = formData.get("Address");
+
           dispatch(
             setUser({
               firstName,
@@ -73,7 +73,6 @@ export const authApi = apiService.injectEndpoints({
               email,
             })
           );
-          dispatch(signIn(token));
         } catch (err) {
           console.error(err);
         }

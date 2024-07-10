@@ -1,5 +1,4 @@
 import { Stack, Grid, Typography, Box, Chip, Button } from "@mui/material";
-import Iconify from "../../../components/Iconify";
 import ImagesPreview from "./ImagesPreview";
 import { fCurrencyVND } from "../../../utils/formatNumber";
 import { useDispatch } from "react-redux";
@@ -34,7 +33,7 @@ const DetailContainer = ({ data }) => {
         <ImagesPreview image={image?.content} />
       </Grid>
       <Grid item xs={12} sm={6}>
-        <Stack direction={"column"} spacing={1}>
+        <Stack direction={"column"} spacing={2}>
           <Typography
             component="div"
             color={(theme) => theme.palette.grey[500]}
@@ -88,7 +87,7 @@ const DetailContainer = ({ data }) => {
               />
             </Stack>
           </Stack>
-          <Stack direction={"row"} justifyContent={"space-between"} py={1}>
+          <Stack direction={"row"} justifyContent={"space-between"} py={3}>
             <Button
               size={"large"}
               variant="contained"
