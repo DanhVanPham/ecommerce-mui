@@ -6,7 +6,7 @@ import { PAYMENT_STATUS } from "./constants";
 import CompleteCard from "./CompleteCard";
 import ErrorCard from "./ErrorCard";
 import { useSelector } from "react-redux";
-import { FEE_SHIP } from "../../utils/constants";
+import { FEE_SHIP, STATUS_ORDER, STATUS_PAYMENT } from "../../utils/constants";
 import { dispatch } from "../../app/store";
 import { orderApi } from "../../app/services/order/orderApi";
 import { VNPAY_SECRET_KEY } from "../../configs/app";
@@ -17,6 +17,7 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 const PaymentContainer = () => {
   const [paymentStatus, setPaymentStatus] = useState(PAYMENT_STATUS.idle);
   const [errorCode, setErrorCode] = useState(null);
+  const [errorMsg, setErrorMsg] = useState('');
   const [paymentedIds, updatePaymentedIds] = useLocalStorage(
     "paymentedIds",
     []
@@ -25,6 +26,16 @@ const PaymentContainer = () => {
   const cartItems = useSelector((state) => state.cart.items);
 
   const handleClearCart = () => dispatch(clearCart());
+
+  const handlePaymentOrder = async (id) => {
+    const formData = new FormData();
+    formData.append('Id', id);
+    formData.append('Status', STATUS_ORDER.processing);
+    formData.append('StatusPayment', STATUS_PAYMENT.paid);
+    await dispatch(
+      orderApi.endpoints.updateStatusOrder.initiate(formData)
+    ).unwrap();
+  }
 
   const handleCreateOrder = async (data) => {
     const productItems =
@@ -43,9 +54,12 @@ const PaymentContainer = () => {
         email: data?.email,
         userId: data?.userId,
       };
-      await dispatch(
+      const response = await dispatch(
         orderApi.endpoints.createOrder.initiate(parsedData)
       ).unwrap();
+      console.log(response)
+      const orderId = response?.order?.id
+      if (orderId) handlePaymentOrder(orderId)
       return true;
     } catch (error) {
       console.log(error);
@@ -79,7 +93,11 @@ const PaymentContainer = () => {
       const hmac = CryptoJS.HmacSHA512(signData, secretKey);
       const signed = hmac.toString(CryptoJS.enc.Hex);
 
-      if (paymentedIds?.includes(secureHash) || isCreatedOrder.current) return;
+      if (paymentedIds?.includes(secureHash) || isCreatedOrder.current) {
+        setPaymentStatus(PAYMENT_STATUS.failed);
+        setErrorMsg('Đơn hàng đã được thanh toán!')
+        return
+      };
       // Verify the secure hash
       updatePaymentedIds(
         paymentedIds ? [...paymentedIds, secureHash] : [secureHash]
@@ -103,6 +121,7 @@ const PaymentContainer = () => {
       }
     };
     execPayment();
+    return () => isCreatedOrder.current = false;
   }, []);
 
   const renderContent = () => {
@@ -127,7 +146,7 @@ const PaymentContainer = () => {
         return (
           <ErrorCard
             title="Thanh toán thất bại"
-            description={`Thanh toán không thành công với mã lỗi: ${errorCode}! Vui lòng thử lại sau.`}
+            description={errorMsg || `Thanh toán không thành công với mã lỗi: ${errorCode}! Vui lòng thử lại sau.`}
           />
         );
       default:

@@ -61,6 +61,15 @@ export function RegisterForm({ onSubmit, methods }) {
           isRequired
         />
         <FormInputLabel
+          label="Số điện thoại"
+          input={<RHFTextField
+            name="phone"
+            size="small"
+            placeholder="Ví dụ: 0905278195"
+          />}
+          isRequired
+        />
+        <FormInputLabel
           label="Địa chỉ"
           input={
             <RHFTextField
@@ -71,10 +80,6 @@ export function RegisterForm({ onSubmit, methods }) {
           }
           isRequired
         />
-        {/* <FormInputLabel
-          label="Số điện thoại"
-          input={<RHFPhoneNumber name="phone" size="small" />}
-        /> */}
         <FormInputLabel
           label="Mật khẩu"
           input={

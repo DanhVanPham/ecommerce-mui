@@ -17,7 +17,7 @@ import { transformParams } from "./helper";
 const defaultValues = {
   firstName: "",
   lastName: "",
-  // phone: "",
+  phone: "",
   email: "",
   address: "",
   password: "",

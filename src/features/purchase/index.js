@@ -1,36 +1,10 @@
 import { Box, Container, Stack, Tab, Tabs, Typography } from "@mui/material";
 import React from "react";
-import Completed from "./completed";
-import Canceled from "./canceled";
-import Shipping from "./shipping";
-import WaitingShip from "./waitingShip";
-
-export const MENU_TAB = {
-  waitingForShip: "CREATED",
-  shipping: "SHIPPING",
-  completed: "SUCCESS",
-  canceled: "CANCEL",
-  waitRefunded: "WAIT REFUNDED",
-  refunded: "REFUNDED",
-};
-
-export const MENU_TABS = [
-  {
-    label: "Chờ giao hàng",
-    value: MENU_TAB.waitingForShip,
-    component: <WaitingShip />,
-  },
-  {
-    label: "Đang vận chuyển",
-    value: MENU_TAB.shipping,
-    component: <Shipping />,
-  },
-  { label: "Hoàn thành", value: MENU_TAB.completed, component: <Completed /> },
-  { label: "Đã hủy", value: MENU_TAB.canceled, component: <Canceled /> },
-];
+import { MENU_TABS } from "./constants";
+import { STATUS_ORDER } from "../../utils/constants";
 
 const PurchaseContainer = () => {
-  const [value, setValue] = React.useState(MENU_TAB.waitingForShip);
+  const [value, setValue] = React.useState(STATUS_ORDER.processing);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

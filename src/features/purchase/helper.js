@@ -1,9 +1,9 @@
 import { Chip } from "@mui/material";
-import { MENU_TAB } from ".";
+import { STATUS_ORDER, STATUS_PAYMENT } from "../../utils/constants";
 
 export const StatusFactory = ({ status }) => {
   switch (status) {
-    case MENU_TAB.completed:
+    case STATUS_ORDER.completed:
       return (
         <Chip
           variant="outlined"
@@ -12,12 +12,37 @@ export const StatusFactory = ({ status }) => {
           label="Hoàn thành"
         />
       );
-    case MENU_TAB.canceled:
+    case STATUS_ORDER.canceled:
       return (
         <Chip variant="outlined" size="small" color="error" label="Đã hủy" />
       );
+    case STATUS_ORDER.processing:
+      return (
+        <Chip
+          variant="outlined"
+          size="small"
+          color="warning"
+          label="Chờ xử lý"
+        />
+      );
 
-    case MENU_TAB.waitRefunded:
+    case STATUS_ORDER.shipping:
+      return (
+        <Chip
+          variant="outlined"
+          size="small"
+          color="info"
+          label="Đang vận chuyển"
+        />
+      );
+    default:
+      break;
+  }
+};
+
+export const StatusPaymentFactory = ({ status }) => {
+  switch (status) {
+    case STATUS_PAYMENT.waitingRefund:
       return (
         <Chip
           variant="outlined"
@@ -26,32 +51,13 @@ export const StatusFactory = ({ status }) => {
           label="Chờ hoàn trả"
         />
       );
-    case MENU_TAB.refunded:
+    case STATUS_PAYMENT.refunded:
       return (
         <Chip
           variant="outlined"
           size="small"
           color="primary"
           label="Đã hoàn trả"
-        />
-      );
-    case MENU_TAB.waitingForShip:
-      return (
-        <Chip
-          variant="outlined"
-          size="small"
-          color="warning"
-          label="Chờ giao hàng"
-        />
-      );
-
-    case MENU_TAB.shipping:
-      return (
-        <Chip
-          variant="outlined"
-          size="small"
-          color="info"
-          label="Đang vận chuyển"
         />
       );
     default:
