@@ -1,12 +1,5 @@
-import { Stack, Divider } from "@mui/material";
+import { Stack } from "@mui/material";
 import { RHFTextField } from "../../../components/hook-form";
-import { RHFPhoneNumber } from "../../../components/hook-form/custom";
-import {
-  DESCRIPTION_SPACING,
-  DescriptionText,
-  FORM_MAX_WIDTH,
-} from "../styles";
-
 // ----------------------------------------------------------------------
 
 export default function GeneralForm() {

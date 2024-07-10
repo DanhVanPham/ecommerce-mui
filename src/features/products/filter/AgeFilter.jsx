@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Badge,
-  Box,
-  Button,
-  Popover,
-  Slider,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Popover, Stack, Typography } from "@mui/material";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 import { IOSSlider } from "./SliderCustom";
 import useFilterParams from "../../../components/filters/useFilterParams";
@@ -25,7 +17,6 @@ const AgeFilter = () => {
     setValue(rangeAge || [0, 0]);
   }, [rangeAge]);
 
-  console.log(values);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };

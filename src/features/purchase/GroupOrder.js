@@ -7,12 +7,9 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
 import { StatusFactory } from "./helper";
-import { GroupBox } from "../../components/group-box/GroupBox";
 import { fCurrencyVND } from "../../utils/formatNumber";
-import { formatDate } from "../../utils/datetime/formatHelper";
-import { FormatType } from "../../utils/constants/datetime/formatType";
+import { FormatType, formatDate } from "../../utils/datetime/formatHelper";
 import Iconify from "../../components/Iconify";
 import useToggle from "../../hooks/useToggle";
 import { MENU_TAB } from ".";

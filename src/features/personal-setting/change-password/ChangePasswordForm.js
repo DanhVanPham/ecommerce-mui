@@ -1,4 +1,3 @@
-import { PropTypes } from "prop-types";
 import { Stack, Alert, Divider } from "@mui/material";
 //
 import { FormProvider } from "../../../components/hook-form";

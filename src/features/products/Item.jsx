@@ -1,7 +1,6 @@
 import { Button, Stack, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import StarIcon from "@mui/icons-material/Star";
 import AddIcon from "@mui/icons-material/Add";
 import { PATH_APP } from "../../routes/paths";
 import { fCurrencyVND } from "../../utils/formatNumber";
@@ -87,39 +86,6 @@ const ProductItem = ({ data }) => {
         >
           {name}
         </Typography>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="center"
-          spacing={1.25}
-        >
-          <Stack direction="row" spacing={0.5} alignItems="center">
-            <StarIcon
-              fontSize="small"
-              sx={{
-                color: "#F2BC1B",
-              }}
-            />
-            <Typography fontSize={14} fontWeight={600}>
-              4.6/5
-            </Typography>
-          </Stack>
-          <Stack
-            sx={{
-              width: "1px",
-              height: "12px",
-              backgroundColor: "#C8C9CB",
-            }}
-          />
-          <Stack direction="row" spacing={0.5} alignItems="center">
-            <Typography fontSize={14} fontWeight={600}>
-              35
-            </Typography>
-            <Typography fontSize={14} fontWeight={400} color="#C8C9CB">
-              Reviews
-            </Typography>
-          </Stack>
-        </Stack>
         <Stack
           direction="row"
           justifyContent="space-between"

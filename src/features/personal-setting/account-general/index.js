@@ -1,10 +1,8 @@
-import { useEffect, useMemo } from "react";
-import { isEqual } from "lodash";
+import { useEffect } from "react";
 // form
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 //
-// import useAuth from "../../../hooks/useAuth";
 import UpdateAccountForm from "./UpdateAccountForm";
 import { useAlertReponse } from "../custom/useAlertResponse";
 import { useSelector } from "react-redux";

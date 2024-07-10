@@ -1,4 +1,3 @@
-import { connect } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
 // @mui
 import { Box, Link, Container, Typography } from "@mui/material";

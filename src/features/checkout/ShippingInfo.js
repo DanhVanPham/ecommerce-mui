@@ -1,6 +1,5 @@
 import React from "react";
-import { GroupBox } from "../../components/group-box/GroupBox";
-import { Divider, Grid, Stack, TextField, Typography } from "@mui/material";
+import { Divider, Grid, Stack, Typography } from "@mui/material";
 import { PropertyItem } from "./PropertyItem";
 import RHFTextField from "../../components/hook-form/RHFTextField";
 

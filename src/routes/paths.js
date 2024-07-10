@@ -13,13 +13,6 @@ export const PATH_AUTH = {
   register: path(ROOTS_AUTH, "/register"),
 };
 
-export const PATH_PAGE = {
-  page403: "/403",
-  page404: "/404",
-  app404: "/app-not-found",
-  page500: "/500",
-};
-
 export const PATH_APP = {
   root: ROOTS_APP,
   products: {
