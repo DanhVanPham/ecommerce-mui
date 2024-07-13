@@ -1,10 +1,16 @@
 import { Stack, Typography, useTheme } from "@mui/material";
 import React from "react";
 
-export const PropertyItem = ({ label, isRequired, input, sxLabel }) => {
+export const PropertyItem = ({
+  label,
+  isRequired,
+  input,
+  sxLabel,
+  ...others
+}) => {
   const theme = useTheme();
   return (
-    <Stack spacing={1}>
+    <Stack spacing={1} {...others}>
       <Typography
         fontSize="12px"
         fontWeight={400}

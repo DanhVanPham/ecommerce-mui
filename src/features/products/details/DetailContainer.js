@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../../../app/redux/cart/cartSlice";
 import { useNavigate } from "react-router-dom";
 import { PATH_APP } from "../../../routes/paths";
+import Company from "./Company";
 
 const DetailContainer = ({ data }) => {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const DetailContainer = ({ data }) => {
   const { price, size } = data ?? {};
   const { name, image, description, milkBrand, startAge, endAge } =
     data?.product ?? {};
+  const company = milkBrand?.company;
 
   const handleAddToCart = () => {
     dispatch(addToCart(data));
@@ -22,6 +24,9 @@ const DetailContainer = ({ data }) => {
     router(PATH_APP.checkout);
   };
 
+  const viewCompanyDetails = () => {
+    router(PATH_APP.company.viewDetail(company?.id));
+  };
   const handlePaymentNow = () => {
     handleAddToCart();
     handlePaymentPage();
@@ -111,6 +116,20 @@ const DetailContainer = ({ data }) => {
             </Button>
           </Stack>
         </Stack>
+      </Grid>
+      <Grid item xs={12}>
+        <Box
+          sx={{
+            mt: 2,
+            width: 1,
+            boxShadow: (theme) => theme.shadows[2],
+            p: 3,
+            cursor: "pointer",
+          }}
+          onDoubleClick={viewCompanyDetails}
+        >
+          <Company data={company} />
+        </Box>
       </Grid>
     </Grid>
   );

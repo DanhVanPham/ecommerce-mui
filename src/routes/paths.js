@@ -19,6 +19,9 @@ export const PATH_APP = {
     index: path(ROOTS_APP, "/products"),
     viewDetail: (id) => path(ROOTS_APP, `/products/${id}`),
   },
+  company: {
+    viewDetail: (id) => path(ROOTS_APP, `/companies/${id}`),
+  },
   profile: {
     index: path(ROOTS_APP, "/users/profile"),
   },

@@ -64,6 +64,7 @@ export default function Router() {
         },
         { path: "checkout", element: <CheckoutPage /> },
         { path: "payment-return", element: <PaymentReturnPage /> },
+        { path: "companies/:id", element: <CompanyPage /> },
       ],
     },
   ]);
@@ -77,6 +78,7 @@ const ProductsPage = Loadable(lazy(() => import("../pages/products")));
 const ProductDetailsPage = Loadable(
   lazy(() => import("../pages/products/details"))
 );
+const CompanyPage = Loadable(lazy(() => import("../pages/company")));
 const PersonalSettingPage = Loadable(
   lazy(() => import("../pages/settings/personal"))
 );

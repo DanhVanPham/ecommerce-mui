@@ -1,9 +1,18 @@
 export const transformParams = (data) => {
-  const { name, page, limit, startPrice, endPrice, rangeAge, milkBrandIds } =
-    data ?? {};
+  const {
+    name,
+    page,
+    limit,
+    startPrice,
+    endPrice,
+    rangeAge,
+    milkBrandIds,
+    ascDirection,
+  } = data ?? {};
   const formData = new FormData();
   formData.append("PageNumber", page);
   formData.append("PageSize", limit);
+  formData.append("SortOrder", ascDirection ? "asc" : "desc");
 
   if (name) formData.append("Name", name);
   if (rangeAge?.[1]) {

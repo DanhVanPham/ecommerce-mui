@@ -12,11 +12,13 @@ import { NumericFormat } from "react-number-format";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 import useFilterParams from "../../../components/filters/useFilterParams";
 import { isNil } from "lodash";
+import { AntSwitch } from "./styles";
 
 const PriceFilter = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [_startPrice, setStartPrice] = useState(null);
   const [_endPrice, setEndPrice] = useState(null);
+  const [_isAscDirection, setIsAscDirection] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
 
   const { values, setParams } = useFilterParams();
@@ -62,6 +64,7 @@ const PriceFilter = () => {
       ...values,
       startPrice: _startPrice,
       endPrice: _endPrice,
+      ascDirection: _isAscDirection,
     });
     handleClose();
   };
@@ -116,9 +119,29 @@ const PriceFilter = () => {
         }}
       >
         <Box sx={{ p: 3 }}>
-          <Typography fontSize="12px" fontWeight={300}>
-            LỌC THEO GIÁ
-          </Typography>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+            spacing={1}
+          >
+            <Typography fontSize="12px" fontWeight={300}>
+              LỌC THEO GIÁ
+            </Typography>
+            <Stack direction="row" spacing={1} alignItems="center">
+              <Typography variant="caption" fontWeight={300}>
+                Giảm
+              </Typography>
+              <AntSwitch
+                checked={_isAscDirection}
+                onChange={(e, checked) => setIsAscDirection(checked)}
+                inputProps={{ "aria-label": "ant design" }}
+              />
+              <Typography variant="caption" fontWeight={300}>
+                Tăng
+              </Typography>
+            </Stack>
+          </Stack>
           <Stack my={1.5}>
             <Stack direction="row" alignItems="center" spacing={1}>
               <CurrencyField

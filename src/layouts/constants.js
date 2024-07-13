@@ -51,12 +51,14 @@ export const FILTER_CONDITION = {
   endPrice: "endPrice",
   rangeAge: "rangeAge",
   milkBrandIds: "milkBrandIds",
+  ascDirection: "ascDirection",
 };
 
 export const DEFAULT_PARAMS = {
   page: 1,
   limit: 50,
   name: "",
+  ascDirection: true,
   startPrice: null,
   endPrice: null,
   rangeAge: [0, 0],
